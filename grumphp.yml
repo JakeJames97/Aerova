@@ -1,0 +1,12 @@
+grumphp:
+  stop_on_failure: true
+  tasks:
+    phpstan:
+      configuration: phpstan.neon
+      memory_limit: "-1"
+      triggered_by: ['php']
+    composer_script:
+      script: pint
+      triggered_by: ['php']
+      metadata:
+        label: Pint
