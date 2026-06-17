@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.5",
         "laravel/framework": "^13.8",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0"
     },
     "require-dev": {
@@ -59,6 +60,9 @@
         ],
         "pint": [
             "./vendor/bin/pint --test"
+        ],
+        "pint:fix": [
+            "./vendor/bin/pint"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
