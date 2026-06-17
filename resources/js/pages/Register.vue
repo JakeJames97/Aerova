@@ -3,21 +3,15 @@
     <h1 class="auth-title">Register Your Account</h1>
     <p class="auth-subtitle">Enter your username, email and password below to register</p>
 
-    <form class="auth-form">
-      <label class="form-field">
-        <span class="form-field__label">Username</span>
-        <input type="text" required />
-      </label>
-      <label class="form-field">
-        <span class="form-field__label">Email</span>
-        <input type="email" required />
-      </label>
-      <label class="form-field">
-        <span class="form-field__label">Password</span>
-        <input type="password" required />
-      </label>
-      <button type="submit" class="auth-submit">
-        Register
+    <form @submit.prevent="onSubmit" class="auth-form">
+      <FormField name="username" label="Username" />
+      <FormField name="email" label="Email" type="email" />
+      <FormField name="password" label="Password" type="password" />
+
+      <p v-if="generalError" class="auth-error">{{ generalError }}</p>
+
+      <button type="submit" class="auth-submit" :disabled="isSubmitting">
+        {{ isSubmitting ? 'Registering…' : 'Register' }}
       </button>
     </form>
 
@@ -27,3 +21,51 @@
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
+import * as yup from 'yup';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/useAuthStore.ts';
+import type { AxiosError } from 'axios';
+import FormField from "@/components/FormField.vue";
+
+const auth = useAuthStore();
+const router = useRouter();
+const generalError = ref<string | null>(null);
+
+const schema = toTypedSchema(
+  yup.object({
+    username: yup.string().required('Username is required'),
+    email: yup.string().required('Email is required').email('Enter a valid email address'),
+    password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+  }),
+);
+
+const { defineField, handleSubmit, isSubmitting, setErrors } = useForm({
+  validationSchema: schema,
+});
+
+const onSubmit = handleSubmit(async (values) => {
+  generalError.value = null;
+
+  try {
+    await auth.register(values);
+    router.push({ name: 'dashboard' });
+  } catch (e) {
+    const err = e as AxiosError<{ message?: string; errors?: Record<string, string[]> }>;
+
+    if (err.response?.status === 422 && err.response?.data?.errors) {
+      const serverErrors: Record<string, string> = {};
+      for (const [field, messages] of Object.entries(err.response.data.errors)) {
+        serverErrors[field] = messages[0];
+      }
+      setErrors(serverErrors);
+    } else {
+      generalError.value = err.response?.data?.message ?? 'Something went wrong. Please try again.';
+    }
+  }
+});
+</script>

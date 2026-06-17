@@ -3,17 +3,14 @@
     <h1 class="auth-title">Log in to your account</h1>
     <p class="auth-subtitle">Enter your email and password below to log in</p>
 
-    <form class="auth-form">
-      <label class="form-field">
-        <span class="form-field__label">Email</span>
-        <input type="email" required autocomplete="email"/>
-      </label>
-      <label class="form-field">
-        <span class="form-field__label">Password</span>
-        <input type="password" required autocomplete="current-password"/>
-      </label>
-      <button type="submit" class="auth-submit">
-        Log in
+    <form @submit.prevent="onSubmit" class="auth-form">
+      <FormField name="login" label="Email Or Username" />
+      <FormField name="password" label="Password" type="password" />
+
+      <p v-if="generalError" class="auth-error">{{ generalError }}</p>
+
+      <button type="submit" class="auth-submit" :disabled="isSubmitting">
+        {{ isSubmitting ? 'Logging in…' : 'Log In' }}
       </button>
     </form>
 
@@ -23,3 +20,47 @@
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
+import * as yup from 'yup';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/useAuthStore.ts';
+import FormField from '@/components/FormField.vue';
+import type { AxiosError } from 'axios';
+import type {LoginCredentials} from "@/types/auth.ts";
+
+const auth = useAuthStore();
+const router = useRouter();
+const generalError = ref<string | null>(null);
+
+const schema = toTypedSchema(
+  yup.object({
+    email: yup.string().required('Email is required').email('Enter a valid email address'),
+    password: yup.string().required('Password is required'),
+  }),
+);
+
+const { handleSubmit, isSubmitting, setErrors } = useForm({ validationSchema: schema });
+
+const onSubmit = handleSubmit(async (values) => {
+  generalError.value = null;
+  try {
+    await auth.login(values as unknown as LoginCredentials);
+    router.push({ name: 'dashboard' });
+  } catch (e) {
+    const err = e as AxiosError<{ message?: string; errors?: Record<string, string[]> }>;
+    if (err.response?.status === 422 && err.response?.data?.errors) {
+      const serverErrors: Record<string, string> = {};
+      for (const [field, messages] of Object.entries(err.response.data.errors)) {
+        serverErrors[field] = messages[0];
+      }
+      setErrors(serverErrors);
+    } else {
+      generalError.value = err.response?.data?.message ?? 'Login failed';
+    }
+  }
+});
+</script>
