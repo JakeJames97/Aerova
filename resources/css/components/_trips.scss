@@ -43,29 +43,6 @@
         margin: 0;
     }
 
-    &__status {
-        flex-shrink: 0;
-        padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 600;
-
-        &--planned {
-            background: #eef2f7;
-            color: #3b5573;
-        }
-
-        &--in_progress {
-            background: #fdf2dd;
-            color: #8a5a12;
-        }
-
-        &--completed {
-            background: #e6f4ea;
-            color: colours.$colour-accent;
-        }
-    }
-
     &__dates {
         font-size: typography.$font-size-sm;
         color: colours.$colour-text-muted;

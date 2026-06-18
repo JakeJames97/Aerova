@@ -1,0 +1,30 @@
+@use '../common/colours';
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    font-weight: 600;
+
+    &--planned {
+        background: colours.$status-planned-bg;
+        color: colours.$status-planned-text;
+        border-color: colours.$status-planned-border;
+    }
+
+    &--in_progress {
+        background: colours.$status-in-progress-bg;
+        color: colours.$status-in-progress-text;
+        border-color: colours.$status-in-progress-border;
+    }
+
+    &--completed {
+        background: colours.$status-completed-bg;
+        color: colours.$status-completed-text;
+        border-color: colours.$status-completed-border;
+    }
+}

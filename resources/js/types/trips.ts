@@ -1,3 +1,5 @@
+import type {Destination} from "@/types/destinations.ts";
+
 export type TripStatus = 'planned' | 'in_progress' | 'completed';
 
 export interface Trip {
@@ -9,4 +11,5 @@ export interface Trip {
   status: TripStatus;
   created_at: string;
   destinations_count: number;
+  destinations?: Destination[];
 }

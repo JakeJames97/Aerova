@@ -1,9 +1,5 @@
 <template>
   <div class="dashboard">
-    <div class="dashboard__head">
-      <h1 class="dashboard__title">Your trips</h1>
-    </div>
-
     <TripFilters
       v-if="!tripsStore.loading && !tripsStore.error && tripsStore.trips.length"
       v-model="activeFilter"

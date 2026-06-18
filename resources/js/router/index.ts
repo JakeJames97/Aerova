@@ -9,8 +9,8 @@ const router = createRouter({
         component: () => import('../layouts/Auth.vue'),
         meta: { requiresGuest: true },
         children: [
-          { path: 'login', name: 'login', component: () => import('../pages/Login.vue') },
-          { path: 'register', name: 'register', component: () => import('../pages/Register.vue') },
+          { path: 'login', name: 'login', component: () => import('@/pages/Login.vue') },
+          { path: 'register', name: 'register', component: () => import('@/pages/Register.vue') },
         ],
       },
       {
@@ -18,7 +18,8 @@ const router = createRouter({
         component: () => import('../layouts/App.vue'),
         meta: { requiresAuth: true },
         children: [
-          { path: 'dashboard', name: 'dashboard', component: () => import('../pages/Dashboard.vue') },
+          { path: 'dashboard', name: 'dashboard', component: () => import('@/pages/Dashboard.vue') },
+          { path: 'trips/:id', name: 'trip', component: () => import('@/pages/TripDetail.vue') },
         ],
       },
     ],
