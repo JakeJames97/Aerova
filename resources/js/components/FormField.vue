@@ -9,11 +9,19 @@
 <script setup lang="ts">
 import { useField } from 'vee-validate';
 
-const props = defineProps<{
-  name: string;
-  label: string;
-  type?: string;
-}>();
+const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+  },
+});
 
 const { value, errorMessage, handleBlur } = useField<string>(() => props.name);
 </script>

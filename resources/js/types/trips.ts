@@ -1,0 +1,12 @@
+export type TripStatus = 'planned' | 'in_progress' | 'completed';
+
+export interface Trip {
+  id: string;
+  name: string;
+  description: string | null;
+  start_date: string;
+  end_date: string;
+  status: TripStatus;
+  created_at: string;
+  destinations_count: number;
+}

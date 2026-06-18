@@ -1,5 +1,5 @@
-@use 'colours';
-@use 'typography';
+@use '../common/colours';
+@use '../common/typography';
 
 .form-field {
     display: flex;

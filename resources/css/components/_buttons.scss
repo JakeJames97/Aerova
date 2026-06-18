@@ -1,4 +1,4 @@
-@use 'colours';
+@use '../common/colours';
 
 .btn {
     display: inline-flex;
@@ -7,7 +7,7 @@
     padding: 11px 16px;
     border: 1px solid transparent;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: background-colour 0.15s ease, border-colour 0.15s ease, box-shadow 0.15s ease;
