@@ -1,0 +1,28 @@
+@use '../common/colours';
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    color: colours.$colour-text-muted;
+    cursor: pointer;
+
+    &:hover {
+        color: colours.$colour-text;
+    }
+
+    &:focus-visible {
+        outline: 2px solid colours.$colour-accent;
+        outline-offset: 1px;
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+    }
+}

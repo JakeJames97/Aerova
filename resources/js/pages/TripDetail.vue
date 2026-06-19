@@ -7,7 +7,7 @@
 
     <p v-if="loading">Loading…</p>
 
-    <p v-else-if="error" class="trip-detail__empty">
+    <p v-else-if="error" class="empty-state">
       {{ error }}
     </p>
 
@@ -28,36 +28,11 @@
 
       <p v-if="trip.description" class="trip-detail__description">{{ trip.description }}</p>
 
-      <section class="trip-detail__itinerary">
-        <h2 class="trip-detail__section-title">Itinerary</h2>
-
-        <p v-if="!trip.destinations?.length" class="trip-detail__empty">
-          No destinations yet.
-        </p>
-
-        <ol v-else class="destination-list">
-          <li v-for="destination in trip.destinations" :key="destination.id" class="destination">
-            <div class="destination__head">
-              <h3 class="destination__name">{{ destination.name }}</h3>
-              <span v-if="destination.arrival_date" class="destination__dates">
-                {{ formatDateRange(destination.arrival_date, destination.departure_date ?? destination.arrival_date) }}
-              </span>
-            </div>
-
-            <ul v-if="destination.tasks.length" class="task-list">
-              <li
-                v-for="task in destination.tasks"
-                :key="task.id"
-                class="task"
-                :class="{ 'task--done': task.is_completed }"
-              >
-                <span class="task__check">{{ task.is_completed ? '✓' : '○' }}</span>
-                {{ task.title }}
-              </li>
-            </ul>
-          </li>
-        </ol>
-      </section>
+      <DestinationList
+        :trip-id="trip.id"
+        :destinations="trip.destinations ?? []"
+        @changed="loadTrip"
+      />
 
       <ConfirmDialog
         v-model:open="confirmOpen"
@@ -67,6 +42,7 @@
         :loading="deleting"
         @confirm="handleDelete"
       />
+
       <TripForm v-model:open="editOpen" :trip="trip" @saved="onSaved" />
     </template>
   </div>
@@ -85,7 +61,8 @@ import StatusPill from '@/components/StatusPill.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ConfirmDialog from '@/components/modals/ConfirmDialog.vue';
 import TripForm from '@/components/modals/TripForm.vue';
-import type {Trip} from "@/types/trips.ts";
+import DestinationList from '@/components/DestinationList.vue';
+import type { Trip } from '@/types/trips.ts';
 
 const route = useRoute();
 const router = useRouter();
@@ -105,7 +82,7 @@ async function loadTrip() {
   if (result) {
     tripStore.setTrip(result);
   } else {
-    error.value = 'This trip doesn’t exist or has been deleted.'
+    error.value = 'This trip doesn’t exist or has been deleted.';
   }
 }
 

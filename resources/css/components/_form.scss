@@ -1,6 +1,32 @@
 @use '../common/colours';
 @use '../common/typography';
 
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__row {
+        display: flex;
+        gap: 12px;
+
+        > * { flex: 1; }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 8px;
+    }
+
+    &__error {
+        margin: 0;
+        font-size: typography.$font-size-sm;
+        color: colours.$colour-danger;
+    }
+}
+
 .form-field {
     display: flex;
     flex-direction: column;

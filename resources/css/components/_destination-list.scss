@@ -1,0 +1,64 @@
+@use '../common/colours';
+@use '../common/typography';
+
+.itinerary {
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: typography.$font-size-lg;
+        font-weight: 700;
+    }
+}
+
+.destination-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.destination {
+    padding: 18px 20px;
+    background: colours.$colour-surface;
+    border: 1px solid colours.$colour-border;
+    border-radius: 10px;
+
+    &__head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    &__head-left {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__name {
+        margin: 0;
+        font-size: typography.$font-size-base;
+        font-weight: 600;
+    }
+
+    &__dates {
+        flex-shrink: 0;
+        font-size: typography.$font-size-sm;
+        color: colours.$colour-text-muted;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+}

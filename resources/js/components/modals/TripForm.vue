@@ -4,20 +4,20 @@
     :title="isEdit ? 'Edit trip' : 'Create trip'"
     @update:open="emit('update:open', $event)"
   >
-    <form class="trip-form" @submit.prevent="onSubmit">
+    <form class="form" @submit.prevent="onSubmit">
       <FormField name="name" label="Name" :model-value="trip?.name"/>
       <FormField name="description" label="Description" :model-value="trip?.description" />
 
-      <div class="trip-form__row">
+      <div class="form__row">
         <FormField name="start_date" label="Start date" type="date" :model-value="trip?.start_date"/>
         <FormField name="end_date" label="End date" type="date" :model-value="trip?.end_date"/>
       </div>
 
       <FormSelect name="status" label="Status" :options="statusOptions" :model-value="trip?.status ?? 'planned'" />
 
-      <p v-if="error" class="trip-form__error">{{ error }}</p>
+      <p v-if="error" class="form__error">{{ error }}</p>
 
-      <div class="trip-form__actions">
+      <div class="form__actions">
         <BaseButton variant="outline" type="button" :disabled="isSubmitting" @click="emit('update:open', false)">
           Cancel
         </BaseButton>
