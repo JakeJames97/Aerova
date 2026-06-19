@@ -13,3 +13,11 @@ export interface Trip {
   destinations_count: number;
   destinations?: Destination[];
 }
+
+export interface TripPayload {
+  name: string;
+  description: string | null;
+  start_date: string;
+  end_date: string;
+  status: TripStatus;
+}

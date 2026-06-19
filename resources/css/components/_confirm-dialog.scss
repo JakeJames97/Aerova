@@ -1,0 +1,17 @@
+@use '../common/colours';
+@use '../common/typography';
+
+.confirm-dialog {
+    &__message {
+        margin: 0 0 24px;
+        font-size: typography.$font-size-base;
+        line-height: 1.5;
+        color: colours.$colour-text;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+}

@@ -30,9 +30,15 @@
         margin-bottom: 16px;
     }
 
+    &__title {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
     &__name {
         margin: 0 0 6px;
-        font-size: 26px;
+        font-size: typography.$font-size-xl;
         font-weight: 700;
         letter-spacing: -0.02em;
     }
@@ -52,7 +58,7 @@
 
     &__section-title {
         margin: 0 0 16px;
-        font-size: 18px;
+        font-size: typography.$font-size-lg;
         font-weight: 700;
     }
 
@@ -96,7 +102,7 @@
 
     &__dates {
         flex-shrink: 0;
-        font-size: 13px;
+        font-size: typography.$font-size-sm;
         color: colours.$colour-text-muted;
     }
 }

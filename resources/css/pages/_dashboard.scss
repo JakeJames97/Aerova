@@ -1,5 +1,6 @@
 @use '../common/breakpoints';
 @use '../common/colours';
+@use '../common/typography';
 
 .dashboard {
     &__head {
@@ -10,7 +11,7 @@
     }
 
     &__title {
-        font-size: 24px;
+        font-size: typography.$font-size-xl;
         font-weight: 700;
         margin: 0;
     }

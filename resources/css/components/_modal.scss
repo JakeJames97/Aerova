@@ -1,0 +1,72 @@
+@use '../common/colours';
+@use '../common/typography';
+
+.modal {
+    padding: 0;
+    border: none;
+    border-radius: 14px;
+    max-width: 460px;
+    width: calc(100% - 32px);
+    background: colours.$colour-surface;
+    color: colours.$colour-text;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    animation: modal-in 0.15s ease-out;
+
+    &::backdrop {
+        background: rgba(20, 28, 24, 0.45);
+    }
+
+    &__panel {
+        padding: 24px;
+    }
+
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: typography.$font-size-lg;
+        font-weight: 700;
+    }
+
+    &__close {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        padding: 0;
+        width: 28px;
+        height: 28px;
+        color: colours.$colour-text-muted;
+        cursor: pointer;
+        border-radius: 6px;
+
+        &:hover {
+            color: colours.$colour-text;
+        }
+
+        &:focus-visible {
+            outline: 2px solid colours.$colour-accent;
+            outline-offset: 2px;
+        }
+    }
+
+    &__close-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@keyframes modal-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
