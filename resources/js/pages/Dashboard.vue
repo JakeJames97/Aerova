@@ -1,9 +1,12 @@
 <template>
   <div class="dashboard">
-    <TripFilters
-      v-if="!loading && !error && tripsStore.trips.length"
-      v-model="activeFilter"
-    />
+    <div class="dashboard__controls">
+      <TripFilters
+        v-if="!loading && !error && tripsStore.trips.length"
+        v-model="activeFilter"
+      />
+      <BaseButton @click="createOpen = true">Create trip</BaseButton>
+    </div>
 
     <p v-if="loading">Loading…</p>
     <p v-else-if="error" class="dashboard__error">{{ error }}</p>
@@ -18,6 +21,8 @@
       <TripCard v-for="trip in visibleTrips" :key="trip.id" :trip="trip" />
     </div>
   </div>
+
+  <TripForm v-model:open="createOpen" @saved="onCreated" />
 </template>
 
 <script setup lang="ts">
@@ -26,12 +31,15 @@ import { useTripsStore } from '@/stores/useTripsStore.ts';
 import TripCard from '@/components/TripCard.vue';
 import TripFilters from '@/components/TripFilters.vue';
 import * as tripsApi from '@/api/trips';
-import type { TripStatus } from '@/types/trips.ts';
+import type {Trip, TripStatus} from '@/types/trips.ts';
 import {useApiRequest} from "@/composables/useApiRequest.ts";
+import BaseButton from "@/components/BaseButton.vue";
+import TripForm from "@/components/modals/TripForm.vue";
 
 const tripsStore = useTripsStore();
 const { loading, error, execute } = useApiRequest();
 
+const createOpen = ref(false);
 const activeFilter = ref<TripStatus | 'all'>('all');
 
 const visibleTrips = computed(() =>
@@ -45,6 +53,10 @@ async function loadTrips() {
   if (result) {
     tripsStore.setTrips(result);
   }
+}
+
+function onCreated(trip: Trip) {
+  tripsStore.addTrip(trip);
 }
 
 onMounted(() => {

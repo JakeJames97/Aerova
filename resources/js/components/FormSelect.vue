@@ -1,14 +1,23 @@
 <template>
   <label class="form-field">
     <span class="form-field__label">{{ label }}</span>
-    <input v-model="value" :type="type ?? 'text'" @blur="handleBlur" />
+    <select v-model="value" class="form-field__select" @blur="handleBlur" va>
+      <option v-for="option in options" :key="option.value" :value="option.value">
+        {{ option.label }}
+      </option>
+    </select>
     <span v-if="errorMessage" class="form-field__error">{{ errorMessage }}</span>
   </label>
 </template>
 
 <script setup lang="ts">
+import { type PropType } from 'vue';
 import { useField } from 'vee-validate';
-import type {PropType} from "vue";
+
+interface Option {
+  value: string;
+  label: string;
+}
 
 const props = defineProps({
   name: {
@@ -19,18 +28,19 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  type: {
-    type: String,
+  options: {
+    type: Array as PropType<Option[]>,
+    required: true,
   },
   modelValue: {
-    type: [String, null] as PropType<string | null>,
-    default: null,
+    type: String,
+    default: ''
   },
 });
 
 const { value, errorMessage, handleBlur } = useField<string>(
   () => props.name,
   undefined,
-  { initialValue: props.modelValue ?? '' },
+  { initialValue: props.modelValue },
 );
 </script>

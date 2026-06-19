@@ -9,5 +9,9 @@ export const useTripsStore = defineStore('trips', () => {
     trips.value = value;
   }
 
-  return { trips, setTrips };
+  function addTrip(value: Trip) {
+    trips.value = [value, ...trips.value];
+  }
+
+  return { trips, setTrips, addTrip };
 });

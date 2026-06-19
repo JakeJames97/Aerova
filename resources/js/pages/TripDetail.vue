@@ -21,6 +21,7 @@
           <p class="trip-detail__dates">{{ formatDateRange(trip.start_date, trip.end_date) }}</p>
         </div>
         <div class="trip-detail__actions">
+          <BaseButton variant="primary" @click="editOpen = true">Edit</BaseButton>
           <BaseButton variant="danger" @click="confirmOpen = true">Delete</BaseButton>
         </div>
       </header>
@@ -66,6 +67,7 @@
         :loading="deleting"
         @confirm="handleDelete"
       />
+      <TripForm v-model:open="editOpen" :trip="trip" @saved="onSaved" />
     </template>
   </div>
 </template>
@@ -82,6 +84,8 @@ import ChevronLeftComponent from '@/icons/chevron-left.svg?component';
 import StatusPill from '@/components/StatusPill.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ConfirmDialog from '@/components/modals/ConfirmDialog.vue';
+import TripForm from '@/components/modals/TripForm.vue';
+import type {Trip} from "@/types/trips.ts";
 
 const route = useRoute();
 const router = useRouter();
@@ -92,6 +96,7 @@ const { loading, error, execute: executeLoad } = useApiRequest();
 const { loading: deleting, execute: executeDelete } = useApiRequest();
 
 const confirmOpen = ref(false);
+const editOpen = ref(false);
 
 const id = route.params.id as string;
 
@@ -112,6 +117,10 @@ async function handleDelete() {
   } else {
     confirmOpen.value = false;
   }
+}
+
+function onSaved(updated: Trip) {
+  tripStore.setTrip(updated);
 }
 
 onMounted(loadTrip);

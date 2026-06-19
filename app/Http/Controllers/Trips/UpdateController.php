@@ -13,7 +13,10 @@ class UpdateController extends Controller
     {
         $trip->update($request->validated());
 
-        $trip->loadCount('destinations');
+        $trip->load([
+            'destinations',
+            'destinations.tasks',
+        ]);
 
         return new TripResource($trip);
     }

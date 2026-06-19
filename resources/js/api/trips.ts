@@ -16,6 +16,11 @@ export async function updateTrip(id: string, payload: TripPayload) {
   return res.data.data;
 }
 
+export async function createTrip(payload: TripPayload) {
+  const res = await api.post<{ data: Trip }>('/trips', payload);
+  return res.data.data;
+}
+
 export function deleteTrip(id: string) {
   return api.delete(`/trips/${id}`);
 }

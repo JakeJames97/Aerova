@@ -33,4 +33,20 @@
             box-shadow: 0 0 0 3px rgba(31, 122, 77, 0.12);
         }
     }
+
+    &__select {
+        padding: 10px 13px;
+        border: 1px solid colours.$colour-border;
+        border-radius: 8px;
+        font-size: typography.$font-size-base;
+        background: colours.$colour-surface;
+        color: colours.$colour-text;
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: 2px solid colours.$colour-accent;
+            outline-offset: 1px;
+            border-color: colours.$colour-accent;
+        }
+    }
 }

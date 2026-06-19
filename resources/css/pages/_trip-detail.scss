@@ -36,6 +36,11 @@
         margin-bottom: 16px;
     }
 
+    &__actions {
+        display: flex;
+        gap: 8px;
+    }
+
     &__name {
         margin: 0 0 6px;
         font-size: typography.$font-size-xl;
