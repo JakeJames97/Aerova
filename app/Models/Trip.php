@@ -30,11 +30,17 @@ class Trip extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasMany<Destination, $this>
+     */
     public function destinations(): HasMany
     {
         return $this->hasMany(Destination::class);

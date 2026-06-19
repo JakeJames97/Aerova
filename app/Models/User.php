@@ -33,6 +33,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return HasMany<Trip, $this>
+     */
     public function trips(): HasMany
     {
         return $this->hasMany(Trip::class);

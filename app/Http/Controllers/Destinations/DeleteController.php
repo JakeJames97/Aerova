@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Trips;
+namespace App\Http\Controllers\Destinations;
 
 use App\Http\Controllers\Controller;
-use App\Models\Trip;
+use App\Models\Destination;
 use Illuminate\Http\Response;
 
 class DeleteController extends Controller
 {
-    public function __invoke(Trip $trip): Response
+    public function __invoke(Destination $destination): Response
     {
-        $trip->delete();
+        $destination->delete();
 
         return response()->noContent();
     }

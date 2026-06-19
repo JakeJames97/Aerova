@@ -23,6 +23,9 @@ class Task extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Destination, $this>
+     */
     public function destination(): BelongsTo
     {
         return $this->belongsTo(Destination::class);
