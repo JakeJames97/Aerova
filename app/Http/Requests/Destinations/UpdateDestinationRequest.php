@@ -14,7 +14,9 @@ class UpdateDestinationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255'],
+            'city' => ['sometimes', 'string', 'max:255'],
+            'country_code' => ['sometimes', 'string', 'max:2'],
+            'budget' => ['sometimes', 'integer'],
             'arrival_date' => ['sometimes', 'date'],
             'departure_date' => ['sometimes', 'date', 'after_or_equal:arrival_date'],
         ];

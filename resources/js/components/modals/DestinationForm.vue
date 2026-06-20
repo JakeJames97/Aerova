@@ -5,11 +5,15 @@
     @update:open="emit('update:open', $event)"
   >
     <form class="form" @submit.prevent="onSubmit" :key="destination?.id">
-      <FormField name="name" label="Name" :model-value="destination?.name"/>
+      <CountrySelector :model-value="destination?.country_code ?? 'GB'"/>
+      <div class="form__row">
+        <FormField name="city" label="City" :model-value="destination?.city"/>
+        <FormField name="budget" label="Budget" type="number" :model-value="destination?.budget.toString()"/>
+      </div>
 
       <div class="form__row">
-        <FormField name="arrival_date" label="Arrival date" type="date" :model-value="destination?.arrival_date" />
-        <FormField name="departure_date" label="Departure date" type="date" :model-value="destination?.departure_date" />
+        <FormField name="arrival_date" label="Arrival date" type="date" :model-value="destination?.arrival_date"/>
+        <FormField name="departure_date" label="Departure date" type="date" :model-value="destination?.departure_date"/>
       </div>
 
       <p v-if="error" class="form__error">{{ error }}</p>
@@ -27,17 +31,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type PropType } from 'vue';
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
+import {computed, type PropType} from 'vue';
+import {useForm} from 'vee-validate';
+import {toTypedSchema} from '@vee-validate/yup';
 import * as yup from 'yup';
-import { useApiRequest } from '@/composables/useApiRequest';
+import {useApiRequest} from '@/composables/useApiRequest';
 import * as destinationsApi from '@/api/destinations';
 import Modal from '@/components/Modal.vue';
 import FormField from '@/components/FormField.vue';
 import BaseButton from '@/components/BaseButton.vue';
-import type { Destination, DestinationPayload } from '@/types/destinations.ts';
+import type {Destination, DestinationPayload} from '@/types/destinations.ts';
 import {useNotificationStore} from "@/stores/useNotificationStore.ts";
+import CountrySelector from "@/components/CountrySelector.vue";
 
 const props = defineProps({
   open: {
@@ -64,23 +69,25 @@ const isEdit = computed(() => props.destination !== null);
 
 const schema = toTypedSchema(
   yup.object({
-    name: yup.string().required('Name is required').max(255),
+    city: yup.string().required('City is required').max(255),
+    budget: yup.number().required('Budget is required'),
+    country_code: yup.string().required('Country is required'),
     arrival_date: yup.string().required('Arrival date is required'),
     departure_date: yup
       .string()
       .required('Departure date is required')
       .test('after-arrival', 'Departure date must be after the arrival date', function (value) {
-        const { arrival_date } = this.parent;
+        const {arrival_date} = this.parent;
         return !arrival_date || !value || value >= arrival_date;
       }),
   }),
 );
 
-const { handleSubmit, isSubmitting, resetForm } = useForm({
+const {handleSubmit, isSubmitting, resetForm} = useForm({
   validationSchema: schema,
 });
 
-const { error, execute } = useApiRequest();
+const {error, execute} = useApiRequest();
 
 const onSubmit = handleSubmit(async (values) => {
   const payload = values as DestinationPayload;

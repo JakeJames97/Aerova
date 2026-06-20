@@ -2,6 +2,7 @@
 @use 'layouts';
 @use 'pages';
 @use 'components';
+@use 'flag-icons/css/flag-icons.min.css';
 
 * {
     box-sizing: border-box;
@@ -17,4 +18,8 @@ body {
 html,
 body {
     height: 100%;
+}
+
+.fi {
+    width: 18px !important;
 }

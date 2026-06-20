@@ -13,7 +13,9 @@ class Destination extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'name',
+        'city',
+        'country_code',
+        'budget',
         'arrival_date',
         'departure_date',
     ];

@@ -2,7 +2,10 @@
   <li class="destination">
     <div class="destination__head">
       <div class="destination__head-left">
-        <h3 class="destination__name">{{ destination.name }}</h3>
+        <h3 class="destination__name">
+          <span :class="getFlagClass(destination.country_code)" />
+          {{ destination.city }}
+        </h3>
         <span v-if="destination.arrival_date" class="destination__dates">
           {{ formatDateRange(destination.arrival_date, destination.departure_date ?? destination.arrival_date) }}
         </span>
@@ -31,6 +34,7 @@ import PencilIcon from '@/icons/pencil.svg?component';
 import TrashIcon from '@/icons/trash.svg?component';
 import type { Destination } from '@/types/destinations';
 import TaskList from "@/components/TaskList.vue";
+import {getFlagClass} from "@/helpers.ts";
 
 defineProps({
   destination: {

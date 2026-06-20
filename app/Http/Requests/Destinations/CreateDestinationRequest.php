@@ -14,7 +14,9 @@ class CreateDestinationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'country_code' => ['required', 'string', 'max:2'],
+            'budget' => ['required', 'integer'],
             'arrival_date' => ['required', 'date'],
             'departure_date' => ['required', 'date', 'after_or_equal:arrival_date'],
         ];

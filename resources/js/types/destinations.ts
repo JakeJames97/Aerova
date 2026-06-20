@@ -3,14 +3,18 @@ import type {TripStatus} from "@/types/trips.ts";
 
 export interface Destination {
   id: string;
-  name: string;
+  city: string;
+  budget: number;
+  country_code: string;
   arrival_date: string | null;
   departure_date: string | null;
   tasks: Task[];
 }
 
 export interface DestinationPayload {
-  name: string;
+  city: string;
+  budget: number;
+  country_code: string;
   arrival_date: string;
   departure_date: string;
 }

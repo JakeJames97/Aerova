@@ -21,22 +21,26 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $trip = Trip::factory()->for($user)->create();
         $destination = Destination::factory()->for($trip)->create([
-            'name' => 'old name',
+            'city' => 'Osaka',
         ]);
 
         Sanctum::actingAs($user);
 
         $this->putJson("/api/destinations/{$destination->id}", [
-            'name' => 'New name',
+            'city' => 'Tokyo',
+            'country_code' => 'JP',
+            'budget' => 10000,
             'arrival_date' => '2026-07-01',
             'departure_date' => '2026-07-14',
         ])
             ->assertOk()
-            ->assertJsonPath('data.name', 'New name');
+            ->assertJsonPath('data.city', 'Tokyo');
 
         $this->assertDatabaseHas('destinations', [
             'id' => $destination->id,
-            'name' => 'New name',
+            'city' => 'Tokyo',
+            'country_code' => 'JP',
+            'budget' => 10000,
             'arrival_date' => Carbon::parse('2026-07-01'),
             'departure_date' => Carbon::parse('2026-07-14'),
         ]);
@@ -45,22 +49,24 @@ class UpdateTest extends TestCase
     #[Test]
     public function it_forbids_updating_another_users_destination(): void
     {
-        $trip = Trip::factory()->for(User::factory()->create())->create(['name' => 'Original']);
+        $trip = Trip::factory()->for(User::factory()->create())->create();
         $destination = Destination::factory()->for($trip)->create([
-            'name' => 'original',
+            'city' => 'Tokyo',
         ]);
 
         Sanctum::actingAs(User::factory()->create());
 
         $this->putJson("/api/destinations/{$destination->id}", [
-            'name' => 'Hijacked',
+            'city' => 'Hijacked',
+            'country_code' => 'JP',
+            'budget' => 10000,
             'arrival_date' => '2026-07-01',
             'departure_date' => '2026-07-14',
         ])->assertForbidden();
 
         $this->assertDatabaseHas('destinations', [
             'id' => $destination->id,
-            'name' => 'original',
+            'city' => 'Tokyo',
         ]);
     }
 

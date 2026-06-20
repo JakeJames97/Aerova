@@ -25,15 +25,19 @@ class CreateTest extends TestCase
         Sanctum::actingAs($user);
 
         $this->postJson("/api/trips/{$tripId}/destinations", [
-            'name' => 'Kyoto',
+            'city' => 'Tokyo',
+            'country_code' => 'JP',
+            'budget' => 10000,
             'arrival_date' => '2026-07-01',
             'departure_date' => '2026-07-14',
         ])
             ->assertCreated()
-            ->assertJsonPath('data.name', 'Kyoto');
+            ->assertJsonPath('data.city', 'Tokyo');
 
         $this->assertDatabaseHas('destinations', [
-            'name' => 'Kyoto',
+            'city' => 'Tokyo',
+            'country_code' => 'JP',
+            'budget' => 10000,
             'trip_id' => $trip->id,
             'arrival_date' => Carbon::parse('2026-07-01'),
             'departure_date' => Carbon::parse('2026-07-14'),
@@ -50,7 +54,7 @@ class CreateTest extends TestCase
 
         $this->postJson("/api/trips/{$tripId}/destinations", [])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertJsonValidationErrors(['name', 'arrival_date', 'departure_date']);
+            ->assertJsonValidationErrors(['city', 'country_code', 'budget', 'arrival_date', 'departure_date']);
     }
 
     #[Test]
@@ -63,7 +67,9 @@ class CreateTest extends TestCase
         Sanctum::actingAs(User::factory()->create());
 
         $this->postJson("/api/trips/{$tripId}/destinations", [
-            'name' => 'Bad dates',
+            'city' => 'Tokyo',
+            'country_code' => 'JP',
+            'budget' => 10000,
             'arrival_date' => '2026-07-14',
             'departure_date' => '2026-07-01',
         ])
@@ -89,7 +95,9 @@ class CreateTest extends TestCase
         $tripId = $trip->id;
 
         $this->postJson("/api/trips/{$tripId}/destinations", [
-            'name' => 'Kyoto',
+            'city' => 'Tokyo',
+            'country_code' => 'JP',
+            'budget' => 10000,
             'arrival_date' => '2026-07-01',
             'departure_date' => '2026-07-14',
         ])->assertForbidden();

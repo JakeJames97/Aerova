@@ -19,7 +19,9 @@ class DestinationFactory extends Factory
 
         return [
             'trip_id' => Trip::factory()->create(),
-            'name' => fake()->city(),
+            'city' => fake()->city(),
+            'country_code' => fake()->countryCode(),
+            'budget' => fake()->numberBetween(10000, 100000),
             'arrival_date' => $arrivalDate,
             'departure_date' => $departureDate,
         ];

@@ -11,7 +11,9 @@ return new class extends Migration
         Schema::create('destinations', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('trip_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
+            $table->string('city');
+            $table->string('country_code', 2)->index();
+            $table->unsignedInteger('budget')->nullable();
             $table->date('arrival_date')->nullable();
             $table->date('departure_date')->nullable();
             $table->timestamps();
