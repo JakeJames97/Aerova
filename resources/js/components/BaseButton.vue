@@ -14,7 +14,7 @@ import { type PropType } from 'vue';
 
 defineProps({
   variant: {
-    type: String as PropType<'primary' | 'outline' | 'danger'>,
+    type: String as PropType<'primary' | 'outline' | 'danger' | 'ghost'>,
     default: 'primary',
   },
   fullWidth: {

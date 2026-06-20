@@ -17,17 +17,10 @@
       </div>
     </div>
 
-    <ul v-if="destination.tasks.length" class="task-list">
-      <li
-        v-for="task in destination.tasks"
-        :key="task.id"
-        class="task"
-        :class="{ 'task--done': task.is_completed }"
-      >
-        <span class="task__check">{{ task.is_completed ? '✓' : '○' }}</span>
-        {{ task.title }}
-      </li>
-    </ul>
+    <TaskList
+      :destination-id="destination.id"
+      :tasks="destination.tasks"
+    />
   </li>
 </template>
 
@@ -37,6 +30,7 @@ import { formatDateRange } from '@/lib/date';
 import PencilIcon from '@/icons/pencil.svg?component';
 import TrashIcon from '@/icons/trash.svg?component';
 import type { Destination } from '@/types/destinations';
+import TaskList from "@/components/TaskList.vue";
 
 defineProps({
   destination: {

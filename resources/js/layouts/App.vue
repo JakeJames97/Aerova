@@ -24,17 +24,18 @@
 
     <main class="content">
       <div class="container">
-        <router-view />
+        <router-view :key="route.fullPath" />
       </div>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore.ts';
 import BaseButton from "@/components/BaseButton.vue";
 
+const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 

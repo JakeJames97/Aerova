@@ -31,7 +31,6 @@
       <DestinationList
         :trip-id="trip.id"
         :destinations="trip.destinations ?? []"
-        @changed="loadTrip"
       />
 
       <ConfirmDialog
@@ -43,7 +42,7 @@
         @confirm="handleDelete"
       />
 
-      <TripForm v-model:open="editOpen" :trip="trip" @saved="onSaved" />
+      <TripForm v-model:open="editOpen" :trip="trip" @saved="onSaved" :key="trip.id" />
     </template>
   </div>
 </template>

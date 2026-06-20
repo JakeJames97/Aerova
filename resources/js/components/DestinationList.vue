@@ -23,7 +23,7 @@
       v-model:open="formOpen"
       :trip-id="tripId"
       :destination="destinationToEdit"
-      @saved="emit('changed')"
+      @saved="tripStore.reload"
     />
 
     <ConfirmDialog
@@ -46,6 +46,7 @@ import DestinationCard from '@/components/DestinationCard.vue';
 import DestinationForm from '@/components/modals/DestinationForm.vue';
 import ConfirmDialog from '@/components/modals/ConfirmDialog.vue';
 import type { Destination } from '@/types/destinations';
+import {useTripStore} from "@/stores/useTripStore.ts";
 
 defineProps({
   tripId: {
@@ -58,10 +59,7 @@ defineProps({
   },
 });
 
-const emit = defineEmits({
-  changed: () => true,
-});
-
+const tripStore = useTripStore();
 const formOpen = ref(false);
 const deleteOpen = ref(false);
 const destinationToEdit = ref<Destination | null>(null);
@@ -91,7 +89,7 @@ async function handleDelete() {
   const result = await executeDelete(() => destinationsApi.deleteDestination(destinationToDelete.value!.id));
   if (result !== undefined) {
     deleteOpen.value = false;
-    emit('changed');
+    await tripStore.reload();
   }
 }
 </script>
