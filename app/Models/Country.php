@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Sushi\Sushi;
 
+/**
+ * @property string $name
+ * @property string $code
+ * @property string $currency
+ */
 class Country extends Model
 {
     use HasFactory, Sushi;

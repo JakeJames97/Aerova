@@ -31,6 +31,20 @@
     border: 1px solid colours.$colour-border;
     border-radius: 10px;
 
+    &__title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    &__budget {
+        font-size: typography.$font-size-sm;
+        font-weight: 600;
+        color: colours.$colour-text-muted;
+        position: relative;
+    }
+
     &__head {
         display: flex;
         align-items: baseline;

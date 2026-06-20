@@ -8,7 +8,7 @@
       <CountrySelector :model-value="destination?.country_code ?? 'GB'"/>
       <div class="form__row">
         <FormField name="city" label="City" :model-value="destination?.city"/>
-        <FormField name="budget" label="Budget" type="number" :model-value="destination?.budget.toString()"/>
+        <CurrencyInput name="budget" label="Budget" type="number" :model-value="destination?.budget" />
       </div>
 
       <div class="form__row">
@@ -43,6 +43,7 @@ import BaseButton from '@/components/BaseButton.vue';
 import type {Destination, DestinationPayload} from '@/types/destinations.ts';
 import {useNotificationStore} from "@/stores/useNotificationStore.ts";
 import CountrySelector from "@/components/CountrySelector.vue";
+import CurrencyInput from "@/components/CurrencyInput.vue";
 
 const props = defineProps({
   open: {

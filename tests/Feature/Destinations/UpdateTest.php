@@ -40,7 +40,7 @@ class UpdateTest extends TestCase
             'id' => $destination->id,
             'city' => 'Tokyo',
             'country_code' => 'JP',
-            'budget' => 10000,
+            'budget' => 1000000,
             'arrival_date' => Carbon::parse('2026-07-01'),
             'departure_date' => Carbon::parse('2026-07-14'),
         ]);

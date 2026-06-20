@@ -37,7 +37,7 @@ class CreateTest extends TestCase
         $this->assertDatabaseHas('destinations', [
             'city' => 'Tokyo',
             'country_code' => 'JP',
-            'budget' => 10000,
+            'budget' => 1000000,
             'trip_id' => $trip->id,
             'arrival_date' => Carbon::parse('2026-07-01'),
             'departure_date' => Carbon::parse('2026-07-14'),

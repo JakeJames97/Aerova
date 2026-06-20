@@ -1,9 +1,11 @@
 <template>
-  <label class="form-field">
-    <span class="form-field__label">{{ label }}</span>
+  <div class="form-field">
+    <label class="form-field__label">
+      <span>{{ label }}</span>
+    </label>
     <input v-model="value" :type="type ?? 'text'" @blur="handleBlur" />
     <span v-if="errorMessage" class="form-field__error">{{ errorMessage }}</span>
-  </label>
+  </div>
 </template>
 
 <script setup lang="ts">

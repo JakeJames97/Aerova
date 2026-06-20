@@ -2,10 +2,18 @@
   <li class="destination">
     <div class="destination__head">
       <div class="destination__head-left">
-        <h3 class="destination__name">
-          <span :class="getFlagClass(destination.country_code)" />
-          {{ destination.city }}
-        </h3>
+        <div class="destination__title">
+          <h3 class="destination__name">
+            <span :class="getFlagClass(destination.country_code)" />
+            {{ destination.city }}
+          </h3>
+          <span v-if="destination.budget_formatted" class="destination__budget">
+            {{ destination.budget_formatted }}
+            <span v-if="destination.converted_budget_formatted" class="destination__budget-converted">
+              ≈ {{ destination.converted_budget_formatted }}
+            </span>
+          </span>
+        </div>
         <span v-if="destination.arrival_date" class="destination__dates">
           {{ formatDateRange(destination.arrival_date, destination.departure_date ?? destination.arrival_date) }}
         </span>
