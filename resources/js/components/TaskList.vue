@@ -54,12 +54,14 @@ import CircleIcon from '@/icons/circle.svg?component';
 import TrashIcon from '@/icons/trash.svg?component';
 import type { Task } from '@/types/tasks';
 import {useTripStore} from "@/stores/useTripStore.ts";
+import {useNotificationStore} from "@/stores/useNotificationStore.ts";
 
 const props = defineProps({
   destinationId: { type: String, required: true },
   tasks: { type: Array as PropType<Task[]>, required: true },
 });
 
+const notify = useNotificationStore();
 const tripStore = useTripStore();
 const adding = ref(false);
 const newTitle = ref('');
@@ -82,13 +84,16 @@ function closeAdd() {
 
 async function handleAdd() {
   const title = newTitle.value.trim();
-  if (!title) return;
+  if (!title) {
+    return;
+  }
   const result = await executeAdd(() => tasksApi.createTask(props.destinationId, title));
   if (result) {
     newTitle.value = '';
     await tripStore.reload();
-    await nextTick();
+    notify.success('Successfully created task');
   }
+  notify.error('An error occurred when creating a new task');
 }
 
 async function handleToggle(task: Task) {
@@ -102,6 +107,7 @@ async function handleDelete(task: Task) {
   const result = await executeDelete(() => tasksApi.deleteTask(task.id));
   if (result !== undefined) {
     await tripStore.reload();
+    notify.success('Successfully deleted task');
   }
 }
 </script>

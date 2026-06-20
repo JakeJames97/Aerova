@@ -35,7 +35,9 @@ import type {Trip, TripStatus} from '@/types/trips.ts';
 import {useApiRequest} from "@/composables/useApiRequest.ts";
 import BaseButton from "@/components/BaseButton.vue";
 import TripForm from "@/components/modals/TripForm.vue";
+import { useNotificationStore } from '@/stores/useNotificationStore.ts';
 
+const notify = useNotificationStore();
 const tripsStore = useTripsStore();
 const { loading, error, execute } = useApiRequest();
 
@@ -57,6 +59,7 @@ async function loadTrips() {
 
 function onCreated(trip: Trip) {
   tripsStore.addTrip(trip);
+  notify.success('Trip has been successfully created!');
 }
 
 onMounted(() => {

@@ -62,7 +62,9 @@ import ConfirmDialog from '@/components/modals/ConfirmDialog.vue';
 import TripForm from '@/components/modals/TripForm.vue';
 import DestinationList from '@/components/DestinationList.vue';
 import type { Trip } from '@/types/trips.ts';
+import { useNotificationStore } from '@/stores/useNotificationStore.ts';
 
+const notify = useNotificationStore();
 const route = useRoute();
 const router = useRouter();
 const tripStore = useTripStore();
@@ -82,6 +84,8 @@ async function loadTrip() {
     tripStore.setTrip(result);
   } else {
     error.value = 'This trip doesn’t exist or has been deleted.';
+    notify.error(error.value);
+    router.push({ name: 'dashboard' });
   }
 }
 
@@ -89,6 +93,7 @@ async function handleDelete() {
   if (!trip.value) return;
   const result = await executeDelete(() => tripsApi.deleteTrip(trip.value!.id));
   if (result !== undefined) {
+    notify.success('Trip has been successfully deleted!');
     router.push({ name: 'dashboard' });
   } else {
     confirmOpen.value = false;

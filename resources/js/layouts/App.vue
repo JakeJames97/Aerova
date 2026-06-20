@@ -21,9 +21,9 @@
         <BaseButton variant="outline" @click="handleLogout">Log out</BaseButton>
       </div>
     </header>
-
     <main class="content">
       <div class="container">
+        <Notification />
         <router-view :key="route.fullPath" />
       </div>
     </main>
@@ -34,6 +34,7 @@
 import {useRoute, useRouter} from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore.ts';
 import BaseButton from "@/components/BaseButton.vue";
+import Notification from "@/components/Notification.vue";
 
 const route = useRoute();
 const router = useRouter();

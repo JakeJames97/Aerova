@@ -37,6 +37,7 @@ import Modal from '@/components/Modal.vue';
 import FormField from '@/components/FormField.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import type { Destination, DestinationPayload } from '@/types/destinations.ts';
+import {useNotificationStore} from "@/stores/useNotificationStore.ts";
 
 const props = defineProps({
   open: {
@@ -58,6 +59,7 @@ const emit = defineEmits({
   saved: () => true,
 });
 
+const notify = useNotificationStore();
 const isEdit = computed(() => props.destination !== null);
 
 const schema = toTypedSchema(
@@ -93,6 +95,8 @@ const onSubmit = handleSubmit(async (values) => {
 
     if (!isEdit.value) {
       resetForm();
+
+      notify.success('Destination successfully created!');
     }
   }
 });

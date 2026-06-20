@@ -47,6 +47,7 @@ import DestinationForm from '@/components/modals/DestinationForm.vue';
 import ConfirmDialog from '@/components/modals/ConfirmDialog.vue';
 import type { Destination } from '@/types/destinations';
 import {useTripStore} from "@/stores/useTripStore.ts";
+import { useNotificationStore } from '@/stores/useNotificationStore.ts';
 
 defineProps({
   tripId: {
@@ -60,6 +61,8 @@ defineProps({
 });
 
 const tripStore = useTripStore();
+const notify = useNotificationStore();
+
 const formOpen = ref(false);
 const deleteOpen = ref(false);
 const destinationToEdit = ref<Destination | null>(null);
@@ -90,6 +93,7 @@ async function handleDelete() {
   if (result !== undefined) {
     deleteOpen.value = false;
     await tripStore.reload();
+    notify.success('Destination has successfully been deleted');
   }
 }
 </script>
