@@ -1,23 +1,18 @@
 <template>
   <div class="dashboard">
-    <div class="dashboard__controls">
-      <TripFilters
-        v-if="!loading && !error && tripsStore.trips.length"
-      />
+    <div class="dashboard__controls" v-if="!error">
+      <TripFilters />
       <BaseButton @click="createOpen = true">Create trip</BaseButton>
     </div>
 
-    <p v-if="loading">Loading…</p>
-    <p v-else-if="error" class="dashboard__error">{{ error }}</p>
-    <p v-else-if="tripsStore.trips.length === 0" class="dashboard__empty">
+    <p v-if="error" class="dashboard__error">{{ error }}</p>
+    <p v-else-if="!loading && tripsStore.trips.length === 0" class="dashboard__empty">
       No trips yet. Create your first one to get started.
-    </p>
-    <p v-else-if="tripsStore.trips.length === 0" class="dashboard__empty">
-      No matching trips.
     </p>
 
     <div v-else class="dashboard__grid">
-      <TripCard v-for="trip in tripsStore.trips" :key="trip.id" :trip="trip"/>
+      <TripCardSkeleton v-if="loading" v-for="index in 10" :key="index" />
+      <TripCard v-else v-for="trip in tripsStore.trips" :key="trip.id" :trip="trip"/>
     </div>
   </div>
 
@@ -43,6 +38,7 @@ import TripForm from "@/components/modals/TripForm.vue";
 import {useNotificationStore} from '@/stores/useNotificationStore.ts';
 import Pagination from "@/components/Pagination.vue";
 import {useRoute} from "vue-router";
+import TripCardSkeleton from "@/components/placeholders/TripCardSkeleton.vue";
 
 const route = useRoute();
 const notify = useNotificationStore();
