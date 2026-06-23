@@ -1,7 +1,7 @@
 <template>
   <label class="form-field">
     <span class="form-field__label">{{ label }}</span>
-    <select v-model="value" class="form-field__select" @blur="handleBlur" va>
+    <select v-model="value" class="form-field__select" @blur="handleBlur">
       <option v-for="option in options" :key="option.value" :value="option.value">
         {{ option.label }}
       </option>

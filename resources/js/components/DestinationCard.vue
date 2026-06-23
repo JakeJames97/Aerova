@@ -18,7 +18,7 @@
           {{ formatDateRange(destination.arrival_date, destination.departure_date ?? destination.arrival_date) }}
         </span>
       </div>
-      <div class="destination__actions">
+      <div v-if="editable" class="destination__actions">
         <button type="button" class="icon-button" aria-label="Edit destination" @click="emit('edit', destination)">
           <PencilIcon class="icon-button__icon" />
         </button>
@@ -31,6 +31,7 @@
     <TaskList
       :destination-id="destination.id"
       :tasks="destination.tasks"
+      :editable="editable"
     />
   </li>
 </template>
@@ -49,6 +50,10 @@ defineProps({
     type: Object as PropType<Destination>,
     required: true
   },
+  editable: {
+    type: Boolean,
+    required: true,
+  }
 });
 
 const emit = defineEmits({

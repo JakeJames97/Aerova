@@ -40,7 +40,10 @@ const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 
-const navLinks = [{ name: 'dashboard', label: 'Dashboard' }];
+const navLinks = [
+  { name: 'dashboard', label: 'Dashboard' },
+  { name: 'discover', label: 'Discover' },
+];
 
 async function handleLogout() {
   await auth.logout();

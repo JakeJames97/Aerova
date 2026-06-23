@@ -16,7 +16,8 @@
     gap: 8px;
     font-size: typography.$font-size-sm;
     color: colours.$colour-text;
-    padding-bottom: 6px;
+    padding-bottom: 12px;
+    padding-top: 6px;
     border-bottom: 1px solid colours.$colour-border;
 
     &:last-child {

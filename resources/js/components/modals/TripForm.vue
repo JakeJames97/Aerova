@@ -14,6 +14,9 @@
       </div>
 
       <FormSelect name="status" label="Status" :options="statusOptions" :model-value="trip?.status ?? 'planned'" />
+      <FormCheckbox name="is_public" :model-value="trip?.is_public ?? true">
+        Make this trip public (visible to others)
+      </FormCheckbox>
 
       <p v-if="error" class="form__error">{{ error }}</p>
 
@@ -42,6 +45,7 @@ import FormSelect from '@/components//FormSelect.vue';
 import BaseButton from '@/components//BaseButton.vue';
 import { TRIP_STATUSES } from '@/types/trips.ts';
 import type { Trip, TripPayload } from '@/types/trips.ts';
+import FormCheckbox from "@/components/FormCheckbox.vue";
 
 const props = defineProps({
   open: {

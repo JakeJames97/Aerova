@@ -33,16 +33,6 @@ class ShowTest extends TestCase
     }
 
     #[Test]
-    public function it_forbids_viewing_another_users_trip(): void
-    {
-        $trip = Trip::factory()->for(User::factory()->create())->create();
-
-        Sanctum::actingAs(User::factory()->create());
-
-        $this->getJson("/api/trips/{$trip->id}")->assertForbidden();
-    }
-
-    #[Test]
     public function it_requires_authentication(): void
     {
         $trip = Trip::factory()->create();

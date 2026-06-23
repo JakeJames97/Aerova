@@ -28,6 +28,7 @@ class CreateTest extends TestCase
             'start_date' => '2026-07-01',
             'end_date' => '2026-07-14',
             'status' => TripStatus::PLANNED->value,
+            'is_public' => true,
         ])
             ->assertCreated()
             ->assertJsonPath('data.name', 'Japan 2026');
@@ -39,6 +40,7 @@ class CreateTest extends TestCase
             'end_date' => Carbon::parse('2026-07-14'),
             'user_id' => $user->id,
             'status' => TripStatus::PLANNED->value,
+            'is_public' => true,
         ]);
     }
 

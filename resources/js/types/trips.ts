@@ -10,6 +10,8 @@ export interface Trip {
   start_date: string;
   end_date: string;
   status: TripStatus;
+  is_public: boolean;
+  is_owner: boolean;
   created_at: string;
   destinations_count: number;
   destinations?: Destination[];
@@ -21,4 +23,5 @@ export interface TripPayload {
   start_date: string;
   end_date: string;
   status: TripStatus;
+  is_public: boolean;
 }

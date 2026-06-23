@@ -75,4 +75,18 @@
             border-color: colours.$colour-accent;
         }
     }
+    &--checkbox {
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    &__checkbox {
+        width: 18px;
+        height: 18px;
+        accent-color: colours.$colour-accent;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
 }

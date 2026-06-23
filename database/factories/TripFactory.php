@@ -25,6 +25,7 @@ class TripFactory extends Factory
             'start_date' => $startDate,
             'end_date' => $endDate,
             'status' => TripStatus::PLANNED,
+            'is_public' => false,
         ];
     }
 
@@ -36,5 +37,10 @@ class TripFactory extends Factory
     public function completed(): static
     {
         return $this->state(['status' => TripStatus::COMPLETED]);
+    }
+
+    public function public(): static
+    {
+        return $this->state(['is_public' => true]);
     }
 }

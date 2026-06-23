@@ -15,6 +15,7 @@ class UpdateController extends Controller
 
         $trip->load([
             'destinations',
+            'destinations.country',
             'destinations.tasks',
         ]);
 

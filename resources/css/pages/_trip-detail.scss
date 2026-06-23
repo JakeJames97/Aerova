@@ -80,4 +80,17 @@
         border: 1px solid colours.$colour-border;
         border-radius: 10px;
     }
+
+    &__visibility {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-size: typography.$font-size-xs;
+        font-weight: 600;
+        color: colours.$colour-visibility-public-text;
+        background: colours.$colour-visibility-public;
+    }
 }

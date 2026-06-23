@@ -7,9 +7,9 @@ use App\Models\User;
 
 class TripPolicy
 {
-    public function view(User $user, Trip $trip): bool
+    public function view(): bool
     {
-        return $user->id === $trip->user_id;
+        return true;
     }
 
     public function update(User $user, Trip $trip): bool

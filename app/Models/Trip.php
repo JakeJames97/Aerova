@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\TripStatus;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +29,7 @@ class Trip extends Model
         'start_date',
         'end_date',
         'status',
+        'is_public',
     ];
 
     protected function casts(): array
@@ -35,6 +38,7 @@ class Trip extends Model
             'start_date' => 'date',
             'end_date' => 'date',
             'status' => TripStatus::class,
+            'is_public' => 'boolean',
         ];
     }
 
@@ -52,5 +56,11 @@ class Trip extends Model
     public function destinations(): HasMany
     {
         return $this->hasMany(Destination::class);
+    }
+
+    #[Scope]
+    protected function public(Builder $query): void
+    {
+        $query->where('is_public', true);
     }
 }

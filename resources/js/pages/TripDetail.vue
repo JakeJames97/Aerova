@@ -17,10 +17,11 @@
           <div class="trip-detail__title">
             <h1 class="trip-detail__name">{{ trip.name }}</h1>
             <StatusPill :status="trip.status" />
+            <span class="trip-detail__visibility">{{ trip.is_public ? 'Public' : 'Private' }}</span>
           </div>
           <p class="trip-detail__dates">{{ formatDateRange(trip.start_date, trip.end_date) }}</p>
         </div>
-        <div class="trip-detail__actions">
+        <div v-if="trip.is_owner" class="trip-detail__actions">
           <BaseButton variant="primary" @click="editOpen = true">Edit</BaseButton>
           <BaseButton variant="danger" @click="confirmOpen = true">Delete</BaseButton>
         </div>
@@ -31,6 +32,7 @@
       <DestinationList
         :trip-id="trip.id"
         :destinations="trip.destinations ?? []"
+        :editable="trip.is_owner ?? false"
       />
 
       <ConfirmDialog

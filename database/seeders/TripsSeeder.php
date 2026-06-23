@@ -19,6 +19,7 @@ class TripsSeeder extends Seeder
             [
                 'name' => 'Japan in Autumn',
                 'status' => TripStatus::PLANNED,
+                'is_public' => true,
                 'destinations' => [
                     [
                         'city' => 'Tokyo',
@@ -52,6 +53,7 @@ class TripsSeeder extends Seeder
             [
                 'name' => 'Italian Coast Road Trip',
                 'status' => TripStatus::PROGRESS,
+                'is_public' => true,
                 'destinations' => [
                     [
                         'city' => 'Rome',
@@ -76,6 +78,7 @@ class TripsSeeder extends Seeder
             [
                 'name' => 'Iceland Ring Road',
                 'status' => TripStatus::COMPLETED,
+                'is_public' => false,
                 'destinations' => [
                     [
                         'city' => 'Reykjavik',

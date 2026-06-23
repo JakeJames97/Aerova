@@ -2,7 +2,7 @@
   <section class="itinerary">
     <div class="itinerary__head">
       <h2 class="itinerary__title">Itinerary</h2>
-      <BaseButton @click="openCreate">Add destination</BaseButton>
+      <BaseButton v-if="editable" @click="openCreate">Add destination</BaseButton>
     </div>
 
     <p v-if="!destinations.length" class="empty-state">
@@ -14,12 +14,14 @@
         v-for="destination in destinations"
         :key="destination.id"
         :destination="destination"
+        :editable="editable"
         @edit="openEdit"
         @delete="confirmDelete"
       />
     </ul>
 
     <DestinationForm
+      v-if="editable"
       v-model:open="formOpen"
       :trip-id="tripId"
       :destination="destinationToEdit"
@@ -27,6 +29,7 @@
     />
 
     <ConfirmDialog
+      v-if="editable"
       v-model:open="deleteOpen"
       title="Delete destination?"
       message="Remove this destination and its tasks from this trip?"
@@ -58,6 +61,10 @@ defineProps({
     type: Array as PropType<Destination[]>,
     required: true,
   },
+  editable: {
+    type: Boolean,
+    required: true,
+  }
 });
 
 const tripStore = useTripStore();

@@ -43,7 +43,7 @@
   &__pill {
     width: 70px;
     height: 22px;
-    border-radius: 6px;
+    border-radius: 999px;
     flex-shrink: 0;
   }
 

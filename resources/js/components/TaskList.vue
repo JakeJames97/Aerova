@@ -8,6 +8,7 @@
         :class="{ 'task--done': task.is_completed }"
       >
         <button
+          v-if="editable"
           type="button"
           class="task__toggle"
           :aria-label="task.is_completed ? 'Mark incomplete' : 'Mark complete'"
@@ -18,6 +19,7 @@
         </button>
         <span class="task__title">{{ task.title }}</span>
         <button
+          v-if="editable"
           type="button"
           class="icon-button icon-button--sm"
           aria-label="Delete task"
@@ -28,19 +30,21 @@
       </li>
     </ul>
 
-    <form v-if="adding" class="task-add" @submit.prevent="handleAdd">
-      <input
-        ref="inputEl"
-        v-model="newTitle"
-        type="text"
-        class="task-add__input"
-        placeholder="Add a task…"
-        :disabled="submitting"
-        @keydown.esc="closeAdd"
-      />
-    </form>
+    <div v-if="editable">
+      <form v-if="adding" class="task-add" @submit.prevent="handleAdd">
+        <input
+          ref="inputEl"
+          v-model="newTitle"
+          type="text"
+          class="task-add__input"
+          placeholder="Add a task…"
+          :disabled="submitting"
+          @keydown.esc="closeAdd"
+        />
+      </form>
 
-    <BaseButton v-else class="task-add__trigger" variant="ghost" @click="openAdd">+ Add task</BaseButton>
+      <BaseButton v-else class="task-add__trigger" variant="ghost" @click="openAdd">+ Add task</BaseButton>
+    </div>
   </div>
 </template>
 
@@ -58,7 +62,14 @@ import {useNotificationStore} from "@/stores/useNotificationStore.ts";
 
 const props = defineProps({
   destinationId: { type: String, required: true },
-  tasks: { type: Array as PropType<Task[]>, required: true },
+  tasks: {
+    type: Array as PropType<Task[]>,
+    required: true
+  },
+  editable: {
+    type: Boolean,
+    required: true,
+  }
 });
 
 const notify = useNotificationStore();
@@ -88,12 +99,12 @@ async function handleAdd() {
     return;
   }
   const result = await executeAdd(() => tasksApi.createTask(props.destinationId, title));
-  if (result) {
-    newTitle.value = '';
-    await tripStore.reload();
-    notify.success('Successfully created task');
+  if (!result) {
+    notify.error('An error occurred when creating a new task');
   }
-  notify.error('An error occurred when creating a new task');
+  newTitle.value = '';
+  await tripStore.reload();
+  notify.success('Successfully created task');
 }
 
 async function handleToggle(task: Task) {

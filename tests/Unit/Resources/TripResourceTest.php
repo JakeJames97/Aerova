@@ -9,6 +9,7 @@ use App\Models\Trip;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class TripResourceTest extends TestCase
@@ -20,6 +21,7 @@ class TripResourceTest extends TestCase
         $trip = Trip::factory()->for(User::factory())->create([
             'name' => 'Japan 2026',
             'status' => TripStatus::PLANNED,
+            'is_public' => true,
         ]);
 
         $array = new TripResource($trip)->toArray(Request::create('/'));
@@ -29,6 +31,7 @@ class TripResourceTest extends TestCase
         $this->assertSame($trip->start_date->toDateString(), $array['start_date']);
         $this->assertSame($trip->end_date->toDateString(), $array['end_date']);
         $this->assertSame(TripStatus::PLANNED, $array['status']);
+        $this->assertTrue($array['is_public']);
     }
 
     public function test_it_includes_destinations_when_loaded(): void
@@ -51,5 +54,39 @@ class TripResourceTest extends TestCase
         $array = new TripResource($trip)->toArray(Request::create('/'));
 
         $this->assertSame(3, $array['destinations_count']);
+    }
+
+    public function test_it_returns_true_for_is_owner_when_user_is_owner(): void
+    {
+        $user = User::factory()->create();
+
+        Sanctum::actingAs($user);
+
+        $trip = Trip::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $request = request();
+        $request->setUserResolver(fn () => $user);
+
+        $array = new TripResource($trip)->toArray($request);
+
+        $this->assertTrue($array['is_owner']);
+    }
+
+    public function test_it_returns_false_for_is_owner_when_user_is_not_owner(): void
+    {
+        $user = User::factory()->create();
+
+        Sanctum::actingAs($user);
+
+        $trip = Trip::factory()->for(User::factory())->create();
+
+        $request = request();
+        $request->setUserResolver(fn () => $user);
+
+        $array = new TripResource($trip)->toArray($request);
+
+        $this->assertFalse($array['is_owner']);
     }
 }

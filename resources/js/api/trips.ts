@@ -12,6 +12,16 @@ export async function getTrips(page = 1, status?: string): Promise<Paginated<Tri
   return res.data;
 }
 
+export async function discoverTrips(page = 1, status?: string): Promise<Paginated<Trip>> {
+  const res = await api.get<Paginated<Trip>>('/discover', {
+    params: {
+      page,
+      ...(status ? { status } : {}),
+    },
+  });
+  return res.data;
+}
+
 export async function getTrip(id: string) {
   const res = await api.get<{ data: Trip; }>(`/trips/${id}`);
   return res.data.data;
