@@ -32,7 +32,7 @@ class DestinationResource extends JsonResource
 
     protected function getConvertedToLocalCurrencyBudget(?Country $country, ?int $budget): ?string
     {
-        if (!$budget || !$country || $country->currency === 'GBP') {
+        if (!$budget || !$country || $country->currency === null || $country->currency === 'GBP') {
             return null;
         }
 

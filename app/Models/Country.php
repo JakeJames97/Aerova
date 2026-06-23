@@ -9,13 +9,11 @@ use Sushi\Sushi;
 /**
  * @property string $name
  * @property string $code
- * @property string $currency
+ * @property ?string $currency
  */
 class Country extends Model
 {
     use HasFactory, Sushi;
-
-    protected array $rows = [];
 
     public function getRows(): array
     {
