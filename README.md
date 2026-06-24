@@ -2,8 +2,6 @@
 
 A small full-stack application for planning trips, built to demonstrate a Laravel API working with a Vue 3 single-page frontend and a relational database.
 
-The domain is a simple hierarchy: a **trip** contains **destinations**, and each destination has a checklist of **tasks**. Users register, log in, and manage their own trips through full CRUD, with per-destination budgets that are converted to local currency via a live exchange-rate API.
-
 ---
 
 ## Stack
@@ -28,24 +26,6 @@ The domain is a simple hierarchy: a **trip** contains **destinations**, and each
 - Larastan / PHPStan (static analysis)
 - Pint / Eslint (code style)
 
----
-## Domain Improvements
-
-- I would implement loading skeleton placeholders to make the website feel smoother
-- Allow trip budgets to accept other currencies, rather than assuming GBP
-- Support drag and drop for moving around tasks or even destinations
-- Allow image uploads for galleries etc
-- Trip sharing between users
-- Weather forecasts for each destination
-- Add a scheduled command that automatically updates trip statuses based on their dates (e.g. marking trips completed once past their end date).
----
-
-## Technical Improvements
-
-- Add a mapping layer at the API level so a change to an API field only needs updating in one place rather than throughout the app. This could be done via 'model' style classes.
-- DTOs via spatie/laravel-data — would consolidate the request / resource / TypeScript-type duplication into a single source of truth, and can even generate the frontend types.
-- Unit tests via vitest & E2E tests via cypress for the frontend to improve code stability and reliability
-- Implement CI/CD pipelines
 ---
 
 ## Application Setup
