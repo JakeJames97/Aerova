@@ -89,6 +89,35 @@ class DiscoverTest extends TestCase
     }
 
     #[Test]
+    public function it_filters_trips_by_country_code(): void
+    {
+        $user = User::factory()->create();
+
+        $franceTrip = Trip::factory()->create([
+            'is_public' => true,
+        ]);
+
+        Destination::factory()->for($franceTrip)->create([
+            'country_code' => 'FR',
+        ]);
+
+        $spainTrip = Trip::factory()->create([
+            'is_public' => true,
+        ]);
+
+        Destination::factory()->for($spainTrip)->create([
+            'country_code' => 'ES',
+        ]);
+
+        Sanctum::actingAs($user);
+
+        $this->getJson('/api/discover?country=FR')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $franceTrip->id);
+    }
+
+    #[Test]
     public function it_returns_empty_when_no_public_trips_exist(): void
     {
         $user = User::factory()->create();

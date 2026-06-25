@@ -2,6 +2,7 @@
   <div class="discover">
     <div class="discover__controls" v-if="!error">
       <TripFilters />
+      <CountryFilter />
     </div>
 
     <p v-if="error" class="discover__error">{{ error }}</p>
@@ -23,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {useTripsStore} from '@/stores/useTripsStore.ts';
 import TripCard from '@/components/TripCard.vue';
 import TripFilters from '@/components/TripFilters.vue';
@@ -32,14 +33,19 @@ import {useApiRequest} from "@/composables/useApiRequest.ts";
 import Pagination from "@/components/Pagination.vue";
 import {useRoute} from "vue-router";
 import TripCardSkeleton from "@/components/placeholders/TripCardSkeleton.vue";
+import CountryFilter from "@/components/CountryFilter.vue";
 
 const route = useRoute();
 const tripsStore = useTripsStore();
 const {loading, error, execute} = useApiRequest();
 
-async function loadTrips(page: number, status?: string) {
+const selectedCountry = ref(route.query.country as string ?? '');
+
+async function loadTrips() {
   tripsStore.setTrips([]);
-  const result = await execute(() => tripsApi.discoverTrips(page, status));
+  const page = Number(route.query.page) || 1;
+  const status = (route.query.status as string) || undefined;
+  const result = await execute(() => tripsApi.discoverTrips(page, status, selectedCountry.value));
   if (result) {
     tripsStore.setTrips(result.data);
     tripsStore.setPaginationMeta(result.meta);
@@ -47,17 +53,13 @@ async function loadTrips(page: number, status?: string) {
 }
 
 onMounted(() => {
-  const page = Number(route.query.page) || 1;
-  const status = (route.query.status as string) || undefined;
-  loadTrips(page, status);
+  loadTrips();
 });
 
 watch(
   () => route.query,
   () => {
-    const page = Number(route.query.page) || 1;
-    const status = (route.query.status as string) || undefined;
-    loadTrips(page, status);
+    loadTrips();
   },
 );
 </script>

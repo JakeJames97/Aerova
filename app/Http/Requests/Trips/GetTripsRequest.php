@@ -17,6 +17,7 @@ class GetTripsRequest extends FormRequest
     {
         return [
             'page' => ['sometimes', 'integer'],
+            'country' => ['sometimes', 'string'],
             'status' => ['sometimes', new Enum(TripStatus::class)],
         ];
     }

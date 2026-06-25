@@ -27,8 +27,17 @@ const currentFilter = ref(<Filter>route.query.status || 'all');
 
 function setFilter(status: Filter) {
   currentFilter.value = status;
+
   if (status === 'all') {
-    router.push({ query: { page: '1' } });
+    const {status: _, ...query} = route.query;
+
+    router.push({
+      query: {
+        ...query,
+        page: '1',
+      },
+    });
+
     return;
   }
   router.push({ query: { ...route.query, status, page: '1' } });

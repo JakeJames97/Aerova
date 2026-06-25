@@ -20,6 +20,9 @@ class DiscoverController extends Controller
             ->with(['user', 'likes'])
             ->withCount(['destinations', 'likes'])
             ->when($params['status'] ?? null, fn ($q, $status) => $q->where('status', $status))
+            ->when(
+                $params['country'] ?? null, fn ($q, $country) => $q->whereHas('destinations', fn ($q) => $q->where('country_code', $country))
+            )
             ->latest()
             ->paginate(page: $page);
 

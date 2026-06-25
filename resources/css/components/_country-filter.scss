@@ -1,0 +1,22 @@
+@use '../common/colours';
+@use '../common/typography';
+
+.country-filter {
+    padding: 8px 13px;
+    border: 1px solid colours.$colour-border;
+    border-radius: 8px;
+    font-size: typography.$font-size-sm;
+    background: colours.$colour-surface;
+    color: colours.$colour-text;
+    cursor: pointer;
+
+    &:hover {
+        border-color: colours.$colour-accent;
+    }
+
+    &:focus-visible {
+        outline: 2px solid colours.$colour-accent;
+        outline-offset: 1px;
+        border-color: colours.$colour-accent;
+    }
+}
