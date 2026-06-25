@@ -15,9 +15,16 @@
       <header class="trip-detail__header">
         <div>
           <div class="trip-detail__title">
-            <h1 class="trip-detail__name">{{ trip.name }}</h1>
-            <StatusPill :status="trip.status" />
-            <span class="trip-detail__visibility">{{ trip.is_public ? 'Public' : 'Private' }}</span>
+            <div class="trip-detail__title-group">
+              <h1 class="trip-detail__name">{{ trip.name }}</h1>
+              <StatusPill :status="trip.status" />
+              <span class="trip-detail__visibility">{{ trip.is_public ? 'Public' : 'Private' }}</span>
+            </div>
+            <LikeButton
+              :trip-id="trip.id"
+              :is-liked="trip.is_liked"
+              :likes-count="trip.likes_count"
+            />
           </div>
           <p class="trip-detail__dates">{{ formatDateRange(trip.start_date, trip.end_date) }}</p>
         </div>
@@ -66,6 +73,7 @@ import DestinationList from '@/components/DestinationList.vue';
 import type { Trip } from '@/types/trips.ts';
 import { useNotificationStore } from '@/stores/useNotificationStore.ts';
 import TripDetailSkeleton from "@/components/placeholders/TripDetailSkeleton.vue";
+import LikeButton from "@/components/LikeButton.vue";
 
 const notify = useNotificationStore();
 const route = useRoute();
@@ -82,6 +90,7 @@ const editOpen = ref(false);
 const id = route.params.id as string;
 
 async function loadTrip() {
+  tripStore.setTrip(null);
   const result = await executeLoad(() => tripsApi.getTrip(id));
   if (result) {
     tripStore.setTrip(result);

@@ -23,17 +23,18 @@
     }
 
     &__header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 16px;
         margin-bottom: 16px;
     }
 
     &__title {
         display: flex;
-        gap: 16px;
+        justify-content: space-between;
         margin-bottom: 16px;
+    }
+
+    &__title-group {
+        display: flex;
+        gap: 16px;
     }
 
     &__actions {

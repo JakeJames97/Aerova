@@ -7,11 +7,12 @@
     gap: 6px;
     border: none;
     background: none;
-    padding: 0;
     cursor: pointer;
     color: colours.$colour-text-muted;
     border-radius: 8px;
     transition: color 0.15s ease;
+    background: colours.$colour-surface;
+    padding: 6px 12px;
 
     &__icon {
         width: 18px;
