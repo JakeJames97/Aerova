@@ -19,7 +19,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     if (error.response?.status === 401) {
-      await useAuthStore().logout();
+      useAuthStore().clearSession();
       router.push({ name: 'login' });
     }
     return Promise.reject(error);
