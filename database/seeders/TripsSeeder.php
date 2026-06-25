@@ -103,6 +103,7 @@ class TripsSeeder extends Seeder
             $trip = Trip::factory()->for($user)->create([
                 'name' => $tripData['name'],
                 'status' => $tripData['status'],
+                'is_public' => true,
             ]);
 
             foreach ($tripData['destinations'] as $destData) {

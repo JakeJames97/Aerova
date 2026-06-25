@@ -1,0 +1,8 @@
+<svg viewBox="0 0 470 100" role="img" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(50,50)">
+        <path d="M -40 -40 L -16 -40 L 0 -16 L 16 -40 L 40 -40 L 12 0 L 40 40 L 16 40 L 0 16 L -16 40 L -40 40 L -12 0 Z" fill="#42b883"/>
+        <path d="M -16 -40 L 0 -16 L 16 -40 L 0 0 Z" fill="#35495e"/>
+        <path d="M -16 40 L 0 16 L 16 40 L 0 0 Z" fill="#35495e"/>
+    </g>
+    <text x="100" y="68" font-family="system-ui, sans-serif" font-size="64" font-weight="600" fill="#1d2b22">pedition</text>
+</svg>

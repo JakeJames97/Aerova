@@ -1,4 +1,4 @@
-# Trip Tracker
+# Xpedition
 
 A small full-stack application for planning trips, built to demonstrate a Laravel API working with a Vue 3 single-page frontend and a relational database.
 
@@ -35,7 +35,7 @@ This project runs entirely through Laravel Sail, so the only host requirement is
 ```bash
 # 1. Clone
 git clone <REPO_URL>
-cd trip-tracker
+cd xpedition
 
 # 2. Environment
 cp .env.example .env

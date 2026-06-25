@@ -3,8 +3,7 @@
     <header class="header">
       <div class="header__inner container">
         <div class="header__brand">
-          <span class="header__logo">T</span>
-          <span class="header__title">Trip tracker</span>
+          <LogoIcon/>
         </div>
 
         <nav class="nav">
@@ -23,8 +22,8 @@
     </header>
     <main class="content">
       <div class="container">
-        <Notification />
-        <router-view :key="route.fullPath" />
+        <Notification/>
+        <router-view :key="route.fullPath"/>
       </div>
     </main>
   </div>
@@ -32,21 +31,22 @@
 
 <script setup lang="ts">
 import {useRoute, useRouter} from 'vue-router';
-import { useAuthStore } from '@/stores/useAuthStore.ts';
+import {useAuthStore} from '@/stores/useAuthStore.ts';
 import BaseButton from "@/components/BaseButton.vue";
 import Notification from "@/components/Notification.vue";
+import LogoIcon from '@/icons/logo.svg?component';
 
 const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 
 const navLinks = [
-  { name: 'dashboard', label: 'Dashboard' },
-  { name: 'discover', label: 'Discover' },
+  {name: 'dashboard', label: 'Dashboard'},
+  {name: 'discover', label: 'Discover'},
 ];
 
 async function handleLogout() {
   await auth.logout();
-  router.push({ name: 'login' });
+  router.push({name: 'login'});
 }
 </script>

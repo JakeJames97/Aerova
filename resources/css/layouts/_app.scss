@@ -23,36 +23,18 @@
         display: flex;
         align-items: center;
         gap: 10px;
-    }
 
-    &__logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        background: colours.$colour-accent;
-        color: #fff;
-        font-weight: 700;
-        font-size: typography.$font-size-sm;
-        flex-shrink: 0;
-    }
-
-    &__title {
-        font-weight: 700;
-        font-size: typography.$font-size-base;
-        white-space: nowrap;
+        svg {
+            height: 36px;
+            width: auto;
+        }
     }
 }
 
 .nav {
     display: flex;
     gap: 8px;
-
-    @include breakpoints.above(breakpoints.$tablet) {
-        flex: 1;
-    }
+    flex: 1;
 
     &__link {
         padding: 8px 12px;
