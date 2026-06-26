@@ -7,6 +7,13 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 24px;
+        flex-direction: column;
+        gap: 12px;
+
+        @include breakpoints.above(breakpoints.$tablet) {
+            flex-direction: row;
+            gap: 0;
+        }
     }
     &__head {
         display: flex;

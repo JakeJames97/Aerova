@@ -3,7 +3,11 @@
     <header class="header">
       <div class="header__inner container">
         <div class="header__brand">
-          <LogoIcon/>
+          <router-link
+            :to="{ name: 'dashboard' }"
+          >
+            <LogoIcon/>
+          </router-link>
         </div>
 
         <nav class="nav">
@@ -16,7 +20,7 @@
             {{ link.label }}
           </router-link>
         </nav>
-
+        <NotificationBell/>
         <BaseButton variant="outline" @click="handleLogout">Log out</BaseButton>
       </div>
     </header>
@@ -35,6 +39,7 @@ import {useAuthStore} from '@/stores/useAuthStore.ts';
 import BaseButton from "@/components/BaseButton.vue";
 import Notification from "@/components/Notification.vue";
 import LogoIcon from '@/icons/logo.svg?component';
+import NotificationBell from "@/components/NotificationBell.vue";
 
 const route = useRoute();
 const router = useRouter();

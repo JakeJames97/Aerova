@@ -11,7 +11,7 @@
         margin: 0 auto;
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 8px;
         padding: 18px 0;
 
         @include breakpoints.above(breakpoints.$tablet) {
@@ -43,6 +43,7 @@
         font-weight: 500;
         color: colours.$colour-text-muted;
         text-decoration: none;
+        cursor: pointer;
 
         &:hover {
             background: colours.$colour-bg;
@@ -59,8 +60,13 @@
 .container {
     max-width: 1280px;
     margin: 0 auto;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    @include breakpoints.above(breakpoints.$tablet) {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
 }
 
 .content {
