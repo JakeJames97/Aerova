@@ -13,6 +13,7 @@
         "akaunting/laravel-money": "^6.0",
         "calebporzio/sushi": "^2.5",
         "laravel/framework": "^13.8",
+        "laravel/horizon": "^5.47",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
         "saloonphp/laravel-plugin": "^4.0",
