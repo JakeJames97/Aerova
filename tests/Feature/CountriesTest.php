@@ -16,7 +16,7 @@ class CountriesTest extends TestCase
         Country::factory()->create(['name' => 'France', 'code' => 'FR']);
         Country::factory()->create(['name' => 'Japan', 'code' => 'JP']);
 
-        $response = $this->getJson('/countries');
+        $response = $this->getJson('/api/countries');
 
         $response->assertOk();
 
