@@ -1,0 +1,74 @@
+@use '../common/colours';
+@use '../common/typography';
+@use '../common/breakpoints';
+
+.featured-destinations {
+    margin-top: 44px;
+
+    &__head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    &__title {
+        font-size: typography.$font-size-xl;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    &__all {
+        font-size: typography.$font-size-lg;
+        color: colours.$colour-text-muted;
+        text-decoration: none;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+}
+
+.destination-tile {
+    position: relative;
+    height: 160px;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+
+    @include breakpoints.above(breakpoints.$tablet) {
+        height: 220px;
+    }
+
+    &__image {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.4s ease;
+    }
+
+    &:hover &__image {
+        transform: scale(1.08);
+    }
+
+    &__cover {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 55%);
+    }
+
+    &__name {
+        position: absolute;
+        left: 14px;
+        bottom: 12px;
+        color: colours.$colour-text-light;
+        font-weight: 500;
+        font-size: typography.$font-size-lg;
+        z-index: 1;
+    }
+}

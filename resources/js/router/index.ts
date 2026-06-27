@@ -18,6 +18,7 @@ const router = createRouter({
         component: () => import('../layouts/App.vue'),
         meta: { requiresAuth: true },
         children: [
+          { path: '', name: 'home', component: () => import('@/pages/Home.vue') },
           { path: 'dashboard', name: 'dashboard', component: () => import('@/pages/Dashboard.vue') },
           { path: 'discover', name: 'discover', component: () => import('@/pages/Discover.vue') },
           { path: 'trips/:id', name: 'trip', component: () => import('@/pages/TripDetail.vue') },
@@ -34,7 +35,7 @@ router.beforeEach((to) => {
   }
 
   if (to.meta.requiresGuest && auth.isAuthenticated) {
-    return { name: 'dashboard' };
+    return { name: 'home' };
   }
 });
 

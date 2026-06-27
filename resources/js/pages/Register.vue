@@ -54,7 +54,7 @@ const onSubmit = handleSubmit(async (values) => {
 
   try {
     await auth.register(values);
-    router.push({ name: 'dashboard' });
+    router.push({ name: 'home' });
   } catch (e) {
     const err = e as AxiosError<{ message?: string; errors?: Record<string, string[]> }>;
 

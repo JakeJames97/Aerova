@@ -1,0 +1,51 @@
+@use '../common/colours';
+@use '../common/typography';
+
+.search {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: min(620px, 88%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px 8px 22px;
+    background: colours.$colour-surface;
+    border: 1px solid colours.$colour-border;
+    border-radius: 100px;
+    box-shadow: 0 12px 32px rgba(20, 55, 35, 0.18);
+    z-index: 2;
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+        color: colours.$colour-text-muted;
+        flex-shrink: 0;
+    }
+
+    &__input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: typography.$font-size-base;
+        color: colours.$colour-text;
+        padding: 11px 0;
+
+        &::placeholder {
+            color: colours.$colour-text-muted;
+        }
+    }
+
+    &__button {
+        border: none;
+        border-radius: 100px;
+        padding: 12px 24px;
+        font-size: typography.$font-size-sm;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s ease;
+    }
+}

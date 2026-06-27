@@ -45,7 +45,8 @@ async function loadTrips() {
   tripsStore.setTrips([]);
   const page = Number(route.query.page) || 1;
   const status = (route.query.status as string) || undefined;
-  const result = await execute(() => tripsApi.discoverTrips(page, status, selectedCountry.value));
+  const searchQuery = (route.query.search as string) || undefined;
+  const result = await execute(() => tripsApi.discoverTrips(page, status, selectedCountry.value, searchQuery));
   if (result) {
     tripsStore.setTrips(result.data);
     tripsStore.setPaginationMeta(result.meta);

@@ -57,6 +57,14 @@
             "currency": "EUR"
         },
         {
+            "name": "Bosnia and Herzegovina",
+            "code": "BA",
+            "capital": "Sarajevo",
+            "region": "Europe",
+            "population": 3233526,
+            "currency": "BAM"
+        },
+        {
             "name": "Brazil",
             "code": "BR",
             "capital": "Brasília",
@@ -95,6 +103,14 @@
             "region": "Americas",
             "population": 50882891,
             "currency": "COP"
+        },
+        {
+            "name": "Croatia",
+            "code": "HR",
+            "capital": "Zagreb",
+            "region": "Europe",
+            "population": 3853200,
+            "currency": "EUR"
         },
         {
             "name": "Czech Republic",
@@ -151,6 +167,14 @@
             "region": "Europe",
             "population": 10423054,
             "currency": "EUR"
+        },
+        {
+            "name": "Hungary",
+            "code": "HU",
+            "capital": "Budapest",
+            "region": "Europe",
+            "population": 9749763,
+            "currency": "HUF"
         },
         {
             "name": "India",

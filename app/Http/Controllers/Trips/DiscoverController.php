@@ -23,6 +23,13 @@ class DiscoverController extends Controller
             ->when(
                 $params['country'] ?? null, fn ($q, $country) => $q->whereHas('destinations', fn ($q) => $q->where('country_code', $country))
             )
+            ->when($params['search'] ?? null, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhereHas('destinations', fn ($query) => $query->where('city', 'like', "%{$search}%")
+                            ->orWhere('country_code', 'like', "%{$search}%"));
+                });
+            })
             ->latest()
             ->paginate(page: $page);
 

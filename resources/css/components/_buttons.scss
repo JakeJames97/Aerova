@@ -73,4 +73,13 @@
             color: colours.$colour-accent;
         }
     }
+
+    &--light {
+        background: colours.$colour-surface;
+        color: colours.$colour-text;
+
+        &:hover:not(:disabled) {
+            background: colours.$colour-surface-hover;
+        }
+    }
 }

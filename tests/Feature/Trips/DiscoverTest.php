@@ -118,6 +118,70 @@ class DiscoverTest extends TestCase
     }
 
     #[Test]
+    public function it_searches_trips_by_name(): void
+    {
+        $user = User::factory()->create();
+
+        $match = Trip::factory()->create([
+            'is_public' => true,
+            'name' => 'Tokyo Adventure',
+        ]);
+
+        Trip::factory()->create([
+            'is_public' => true,
+            'name' => 'Paris Getaway',
+        ]);
+
+        Sanctum::actingAs($user);
+
+        $this->getJson('/api/discover?search=tokyo')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $match->id);
+    }
+
+    #[Test]
+    public function it_searches_trips_by_destination_city(): void
+    {
+        $user = User::factory()->create();
+
+        $match = Trip::factory()->create([
+            'is_public' => true,
+            'name' => 'Summer Trip',
+        ]);
+        Destination::factory()->for($match)->create(['city' => 'Kyoto']);
+
+        $other = Trip::factory()->create(['is_public' => true, 'name' => 'Winter Trip']);
+        Destination::factory()->for($other)->create(['city' => 'Berlin']);
+
+        Sanctum::actingAs($user);
+
+        $this->getJson('/api/discover?search=kyoto')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $match->id);
+    }
+
+    #[Test]
+    public function it_searches_trips_by_destination_country_code(): void
+    {
+        $user = User::factory()->create();
+
+        $match = Trip::factory()->create(['is_public' => true, 'name' => 'A trip']);
+        Destination::factory()->for($match)->create(['country_code' => 'JP']);
+
+        $other = Trip::factory()->create(['is_public' => true, 'name' => 'Another trip']);
+        Destination::factory()->for($other)->create(['country_code' => 'DE']);
+
+        Sanctum::actingAs($user);
+
+        $this->getJson('/api/discover?search=JP')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.id', $match->id);
+    }
+
+    #[Test]
     public function it_returns_empty_when_no_public_trips_exist(): void
     {
         $user = User::factory()->create();

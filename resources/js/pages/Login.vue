@@ -50,7 +50,7 @@ const onSubmit = handleSubmit(async (values) => {
   generalError.value = null;
   try {
     await auth.login(values as unknown as LoginCredentials);
-    router.push({ name: 'dashboard' });
+    router.push({ name: 'home' });
   } catch (e) {
     const err = e as AxiosError<{ message?: string; errors?: Record<string, string[]> }>;
     if (err.response?.status === 422 && err.response?.data?.errors) {

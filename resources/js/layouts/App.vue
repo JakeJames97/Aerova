@@ -4,7 +4,7 @@
       <div class="header__inner container">
         <div class="header__brand">
           <router-link
-            :to="{ name: 'dashboard' }"
+            :to="{ name: 'home' }"
           >
             <LogoIcon/>
           </router-link>
@@ -46,6 +46,7 @@ const router = useRouter();
 const auth = useAuthStore();
 
 const navLinks = [
+  {name: 'home', label: 'Home'},
   {name: 'dashboard', label: 'Dashboard'},
   {name: 'discover', label: 'Discover'},
 ];
