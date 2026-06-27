@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Xpedition</title>
+    <title>Aerova</title>
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 <body>
