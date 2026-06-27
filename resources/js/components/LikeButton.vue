@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue';
-import HeartIcon from '@/icons/heart.svg?component';
+import { HeartIcon } from '@heroicons/vue/24/outline'
 import {useApiRequest} from "@/composables/useApiRequest.ts";
 import * as tripsApi from "@/api/trips.ts";
 import {useNotificationStore} from "@/stores/useNotificationStore.ts";

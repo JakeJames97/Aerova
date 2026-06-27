@@ -6,8 +6,8 @@
       role="status"
     >
         <span class="notification__icon">
-          <CheckIcon v-if="notification.type === 'success'"/>
-          <AlertIcon v-else/>
+          <CheckCircleIcon v-if="notification.type === 'success'"/>
+          <BellAlertIcon v-else/>
         </span>
       <span class="notification__message">{{ notification.message }}</span>
       <button
@@ -16,7 +16,7 @@
         aria-label="Dismiss"
         @click="dismiss()"
       >
-        <CloseIcon class="notification__close-icon"/>
+        <XMarkIcon class="notification__close-icon"/>
       </button>
     </div>
   </TransitionGroup>
@@ -25,9 +25,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
 import {useNotificationStore} from '@/stores/useNotificationStore.ts';
-import CheckIcon from '@/icons/check.svg?component';
-import AlertIcon from '@/icons/alert.svg?component';
-import CloseIcon from '@/icons/close.svg?component';
+import { CheckCircleIcon, BellAlertIcon, XMarkIcon } from '@heroicons/vue/24/solid'
 
 const store = useNotificationStore();
 const {notification} = storeToRefs(store);

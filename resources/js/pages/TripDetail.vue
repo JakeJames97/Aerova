@@ -2,7 +2,7 @@
   <div class="trip-detail">
     <div class="trip-detail__topbar">
       <button type="button" class="trip-detail__back" @click="router.push({ name: 'dashboard' })">
-        <ChevronLeftComponent class="trip-detail__back-icon" />
+        <ChevronLeftIcon class="trip-detail__back-icon" />
         Back to trips
       </button>
       <LikeButton
@@ -70,7 +70,7 @@ import {useTripStore} from '@/stores/useTripStore.ts';
 import {useApiRequest} from '@/composables/useApiRequest';
 import * as tripsApi from '@/api/trips';
 import {formatDateRange} from '@/lib/date';
-import ChevronLeftComponent from '@/icons/chevron-left.svg?component';
+import { ChevronLeftIcon } from '@heroicons/vue/24/solid'
 import StatusPill from '@/components/StatusPill.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ConfirmDialog from '@/components/modals/ConfirmDialog.vue';

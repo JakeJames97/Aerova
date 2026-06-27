@@ -20,7 +20,7 @@
       </div>
       <div v-if="editable" class="destination__actions">
         <button type="button" class="icon-button" aria-label="Edit destination" @click="emit('edit', destination)">
-          <PencilIcon class="icon-button__icon" />
+          <PencilSquareIcon class="icon-button__icon" />
         </button>
         <button type="button" class="icon-button" aria-label="Delete destination" @click="emit('delete', destination)">
           <TrashIcon class="icon-button__icon" />
@@ -39,8 +39,7 @@
 <script setup lang="ts">
 import { type PropType } from 'vue';
 import { formatDateRange } from '@/lib/date';
-import PencilIcon from '@/icons/pencil.svg?component';
-import TrashIcon from '@/icons/trash.svg?component';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import type { Destination } from '@/types/destinations';
 import TaskList from "@/components/TaskList.vue";
 import {getFlagClass} from "@/helpers.ts";

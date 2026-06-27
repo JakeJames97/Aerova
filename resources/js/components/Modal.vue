@@ -4,7 +4,7 @@
       <header v-if="title" class="modal__header">
         <h2 class="modal__title">{{ title }}</h2>
         <button type="button" class="modal__close" aria-label="Close" @click="close">
-          <CloseIcon class="modal__close-icon" />
+          <XMarkIcon class="modal__close-icon" />
         </button>
       </header>
 
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import {useTemplateRef, watch} from 'vue';
-import CloseIcon from '@/icons/close.svg?component';
+import { XMarkIcon } from '@heroicons/vue/24/solid'
 
 const props = defineProps({
   open: {

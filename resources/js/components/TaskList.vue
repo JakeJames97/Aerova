@@ -53,9 +53,8 @@ import { type PropType, nextTick, ref, useTemplateRef } from 'vue';
 import { useApiRequest } from '@/composables/useApiRequest';
 import * as tasksApi from '@/api/tasks';
 import BaseButton from '@/components/BaseButton.vue';
-import CheckIcon from '@/icons/check.svg?component';
+import { CheckIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import CircleIcon from '@/icons/circle.svg?component';
-import TrashIcon from '@/icons/trash.svg?component';
 import type { Task } from '@/types/tasks';
 import {useTripStore} from "@/stores/useTripStore.ts";
 import {useNotificationStore} from "@/stores/useNotificationStore.ts";

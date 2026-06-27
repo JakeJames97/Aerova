@@ -45,7 +45,7 @@ import { useRouter } from 'vue-router';
 import { useApiNotificationStore } from '@/stores/useApiNotificationStore.ts';
 import {formatRelativeTime} from "@/lib/date.ts";
 import type { Notification } from '@/types/notifications';
-import BellIcon from '@/icons/bell.svg?component';
+import { BellIcon } from '@heroicons/vue/24/outline'
 
 const store = useApiNotificationStore();
 const router = useRouter();
