@@ -3,4 +3,19 @@
 @use '../common/typography';
 
 .dashboard {
+    &__welcome {
+        margin-bottom: 28px;
+    }
+
+    &__greeting {
+        font-size: typography.$font-size-2xl;
+        font-weight: 600;
+        margin: 0 0 6px;
+    }
+
+    &__subline {
+        font-size: typography.$font-size-base;
+        color: colours.$colour-text-muted;
+        margin: 0;
+    }
 }

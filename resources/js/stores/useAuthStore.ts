@@ -1,7 +1,7 @@
-import { computed, ref } from 'vue';
-import { defineStore } from 'pinia';
+import {computed, ref} from 'vue';
+import {defineStore} from 'pinia';
 import * as authApi from '@/api/auth';
-import type { User, LoginCredentials, RegisterCredentials } from '@/types/auth.ts';
+import type {LoginCredentials, RegisterCredentials, User} from '@/types/auth.ts';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null);
@@ -31,10 +31,14 @@ export const useAuthStore = defineStore('auth', () => {
     setSession(data.token, data.user);
   }
 
+  async function fetchUser() {
+    user.value = await authApi.fetchUser();
+  }
+
   async function logout() {
     await authApi.logout().catch(() => {});
     clearSession();
   }
 
-  return { user, token, isAuthenticated, login, register, logout, clearSession };
+  return { user, token, isAuthenticated, login, register, fetchUser, logout, clearSession };
 });

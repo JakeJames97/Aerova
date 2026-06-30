@@ -1,0 +1,86 @@
+@use '../common/colours';
+@use '../common/typography';
+@use '../common/breakpoints';
+
+
+.statistics-section {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 28px;
+
+    @include breakpoints.above(breakpoints.$tablet) {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.stat-card {
+    display: flex;
+    padding: 20px;
+    background: colours.$colour-surface;
+    border: 1px solid colours.$colour-border;
+    border-radius: 12px;
+    align-items: center;
+    gap: 12px;
+
+    &__icon {
+        flex-shrink: 0;
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+
+        &--trips {
+            background: #8b5cf6;
+        }
+
+        &--countries {
+            background: #10b981;
+        }
+
+        &--likes {
+            background: #f43f5e;
+        }
+
+        &--tasks {
+            background: #3b82f6;
+        }
+
+        &--destinations {
+            background: #f59e0b;
+        }
+    }
+
+    &__icon-svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    &__label {
+        font-size: typography.$font-size-sm;
+        font-weight: 600;
+        color: colours.$colour-text;
+        margin-bottom: 2px;
+    }
+
+    &__value {
+        font-size: 26px;
+        font-weight: 700;
+        color: colours.$colour-text;
+    }
+
+    &__sub {
+        font-size: typography.$font-size-xs;
+        color: colours.$colour-text-muted;
+        margin-top: 2px;
+    }
+}
