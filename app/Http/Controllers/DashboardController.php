@@ -23,10 +23,6 @@ class DashboardController
                 ->withCount('likes')
                 ->get()
                 ->sum('likes_count'),
-            'tasks_to_do' => $user->tasks()
-                ->where('tasks.is_completed', false)
-                ->where('trips.status', '!=', TripStatus::COMPLETED)
-                ->count(),
         ];
 
         $nextTrip = $user->trips()
