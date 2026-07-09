@@ -46,7 +46,7 @@
     &__actions {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 18px;
         margin-left: auto;
     }
 
@@ -106,6 +106,22 @@
             &.router-link-exact-active {
                 background: colours.$colour-bg;
                 color: colours.$colour-accent;
+            }
+        }
+    }
+
+    &__avatar {
+        width: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: opacity 0.15s ease;
+        svg {
+            stroke: #000;
+
+            &:hover {
+                fill: #000;
             }
         }
     }

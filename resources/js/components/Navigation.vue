@@ -22,6 +22,10 @@
         <div class="header__actions">
           <template v-if="auth.isAuthenticated">
             <NotificationBell />
+            <RouterLink :to="{ name: 'profile' }" class="header__avatar">
+              <UserIcon />
+            </RouterLink>
+
             <BaseButton
               variant="outline"
               class="header__action--desktop"
@@ -100,7 +104,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore.ts';
 import BaseButton from '@/components/BaseButton.vue';
 import NotificationBell from '@/components/NotificationBell.vue';
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/vue/24/outline';
 
 const route = useRoute();
 const router = useRouter();

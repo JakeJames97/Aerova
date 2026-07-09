@@ -1,5 +1,4 @@
 import type {Task} from "@/types/tasks.ts";
-import type {TripStatus} from "@/types/trips.ts";
 
 export interface Destination {
   id: string;

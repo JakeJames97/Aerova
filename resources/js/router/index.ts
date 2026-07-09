@@ -29,6 +29,7 @@ const router = createRouter({
         children: [
           { path: 'dashboard', name: 'dashboard', component: () => import('@/pages/Dashboard.vue') },
           { path: 'trips', name: 'trips', component: () => import('@/pages/Trips.vue') },
+          { path: 'profile', name: 'profile', component: () => import('@/pages/Profile.vue') },
         ],
       },
     ],
