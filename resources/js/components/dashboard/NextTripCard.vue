@@ -44,7 +44,7 @@
       <p class="next-trip-card__empty-text">No upcoming trips planned.</p>
       <BaseButton
         variant="primary"
-        @click="goToTrips"
+        @click="goToTripCreation"
       >
         Plan a trip
       </BaseButton>
@@ -107,8 +107,8 @@ function goToTrip() {
   router.push({ name: 'trip', params: { id: props.trip?.id } });
 }
 
-function goToTrips() {
-  router.push({ name: 'trips' });
+function goToTripCreation() {
+  router.push({ name: 'trip-create' });
 }
 
 function formatDeparture(date: string): string {
