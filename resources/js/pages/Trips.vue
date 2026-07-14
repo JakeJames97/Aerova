@@ -2,7 +2,7 @@
   <div class="trips">
     <div class="trips__controls" v-if="!error">
       <TripFilters />
-      <BaseButton @click="createOpen = true">Create trip</BaseButton>
+      <BaseButton @click="goToTripCreation">Create trip</BaseButton>
     </div>
 
     <p v-if="error" class="trips__error">{{ error }}</p>
@@ -21,8 +21,6 @@
     :last-page="tripsStore.paginationMeta.last_page"
     :current-page="tripsStore.paginationMeta.current_page"
   />
-
-  <TripForm v-model:open="createOpen" @saved="onCreated"/>
 </template>
 
 <script setup lang="ts">
@@ -31,21 +29,17 @@ import {useTripsStore} from '@/stores/useTripsStore.ts';
 import TripCard from '@/components/TripCard.vue';
 import TripFilters from '@/components/TripFilters.vue';
 import * as tripsApi from '@/api/trips';
-import type {Trip} from '@/types/trips.ts';
 import {useApiRequest} from "@/composables/useApiRequest.ts";
 import BaseButton from "@/components/BaseButton.vue";
-import TripForm from "@/components/modals/TripForm.vue";
-import {useNotificationStore} from '@/stores/useNotificationStore.ts';
 import Pagination from "@/components/Pagination.vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import TripCardSkeleton from "@/components/placeholders/TripCardSkeleton.vue";
 
 const route = useRoute();
-const notify = useNotificationStore();
+const router = useRouter();
 const tripsStore = useTripsStore();
 const {loading, error, execute} = useApiRequest();
 
-const createOpen = ref(false);
 async function loadTrips(page: number, status?: string) {
   tripsStore.setTrips([]);
   const result = await execute(() => tripsApi.getTrips(page, status));
@@ -55,9 +49,8 @@ async function loadTrips(page: number, status?: string) {
   }
 }
 
-function onCreated(trip: Trip) {
-  tripsStore.addTrip(trip);
-  notify.success('Trip has been successfully created!');
+function goToTripCreation() {
+  router.push({ name: 'trip-create' });
 }
 
 onMounted(() => {

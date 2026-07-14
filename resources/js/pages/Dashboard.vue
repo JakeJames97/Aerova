@@ -5,7 +5,7 @@
         <h1 class="dashboard__greeting">Welcome back, {{ username }}! 👋</h1>
         <p class="dashboard__subline">Here's what's happening with your travels.</p>
       </div>
-      <BaseButton @click="createOpen = true">Create trip</BaseButton>
+      <BaseButton @click="goToTripCreation">Create trip</BaseButton>
     </header>
 
     <StatisticsSection :stats="stats" :loading="loading"/>
@@ -17,7 +17,6 @@
       </div>
     </div>
   </div>
-  <TripForm v-model:open="createOpen" @saved="onCreated"/>
 </template>
 
 <script setup lang="ts">
@@ -31,21 +30,16 @@ import StatisticsSection from "@/components/dashboard/StatisticsSection.vue";
 import WorldMap from "@/components/dashboard/WorldMap.vue";
 import NextTripCard from "@/components/dashboard/NextTripCard.vue";
 import BaseButton from "@/components/BaseButton.vue";
-import TripForm from "@/components/modals/TripForm.vue";
 import {useNotificationStore} from "@/stores/useNotificationStore.ts";
 import RecentActivity from "@/components/dashboard/RecentActivity.vue";
+import {useRouter} from "vue-router";
 
 const auth = useAuthStore();
 const notify = useNotificationStore();
+const router = useRouter();
 const {loading, execute} = useApiRequest();
 const username = computed(() => auth.user?.username ?? '');
 
-
-const createOpen = ref(false);
-
-function onCreated() {
-  notify.success('Trip has been successfully created!');
-}
 
 const stats = ref<DashboardStats>({
   total_trips: 0,
@@ -56,6 +50,10 @@ const stats = ref<DashboardStats>({
 });
 
 const nextTrip = ref<Trip | null>(null);
+
+function goToTripCreation() {
+  router.push({ name: 'trip-create' });
+}
 
 async function load() {
   const result = await execute(() => dashboardApi.getDashboardData());

@@ -11,6 +11,7 @@ const router = createRouter({
           { path: '', name: 'home', component: () => import('@/pages/Home.vue') },
           { path: 'discover', name: 'discover', component: () => import('@/pages/Discover.vue') },
           { path: 'trips/:id', name: 'trip', component: () => import('@/pages/TripDetail.vue') },
+          { path: 'trips/create', name: 'trip-create', component: () => import('@/pages/TripCreate.vue') },
         ],
       },
       {

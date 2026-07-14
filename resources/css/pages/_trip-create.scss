@@ -1,0 +1,36 @@
+@use '../common/colours';
+@use '../common/typography';
+@use '../common/breakpoints';
+
+.trip-create {
+    &__header {
+        margin-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__title {
+        font-size: typography.$font-size-2xl;
+        font-weight: 600;
+        margin: 0 0 4px;
+        color: colours.$colour-text;
+    }
+
+    &__subtitle {
+        font-size: typography.$font-size-base;
+        color: colours.$colour-text-muted;
+        margin: 0;
+    }
+
+    &__card {
+        background: colours.$colour-surface;
+        border: 1px solid colours.$colour-border;
+        border-radius: 16px;
+        padding: 20px;
+
+        @include breakpoints.above(breakpoints.$tablet) {
+            padding: 28px;
+        }
+    }
+}

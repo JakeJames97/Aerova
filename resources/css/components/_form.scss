@@ -89,4 +89,26 @@
         cursor: pointer;
         flex-shrink: 0;
     }
+
+    &__textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 12px;
+        border: 1px solid colours.$colour-border;
+        border-radius: 8px;
+        font-size: typography.$font-size-base;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 80px;
+        line-height: 1.5;
+
+        &:focus {
+            outline: none;
+            border-color: colours.$colour-accent;
+        }
+
+        &--error {
+            border-color: colours.$colour-danger;
+        }
+    }
 }

@@ -22,6 +22,12 @@ class CreateTripRequest extends FormRequest
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'status' => ['required', new Enum(TripStatus::class)],
             'is_public' => ['required', 'boolean'],
+            'destinations' => ['array'],
+            'destinations.*.city' => ['required', 'string', 'max:255'],
+            'destinations.*.country_code' => ['required', 'string', 'size:2'],
+            'destinations.*.budget' => ['required', 'integer', 'min:0'],
+            'destinations.*.arrival_date' => ['required', 'date'],
+            'destinations.*.departure_date' => ['required', 'date', 'after_or_equal:arrival_date'],
         ];
     }
 }

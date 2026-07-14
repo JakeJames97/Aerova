@@ -61,5 +61,7 @@ const { value, errorMessage, handleBlur } = useField<number>(
 
 input {
   padding-left: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>

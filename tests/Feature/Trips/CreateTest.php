@@ -19,7 +19,6 @@ class CreateTest extends TestCase
     public function it_creates_a_trip_for_the_authenticated_user(): void
     {
         $user = User::factory()->create();
-
         Sanctum::actingAs($user);
 
         $this->postJson('/api/trips', [
@@ -29,6 +28,7 @@ class CreateTest extends TestCase
             'end_date' => '2026-07-14',
             'status' => TripStatus::PLANNED->value,
             'is_public' => true,
+            'destinations' => [],
         ])
             ->assertCreated()
             ->assertJsonPath('data.name', 'Japan 2026');
@@ -45,7 +45,110 @@ class CreateTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_required_fields(): void
+    public function it_creates_a_trip_with_destinations(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $response = $this->postJson('/api/trips', [
+            'name' => 'Japan 2026',
+            'start_date' => '2026-07-01',
+            'end_date' => '2026-07-14',
+            'status' => TripStatus::PLANNED->value,
+            'is_public' => true,
+            'destinations' => [
+                [
+                    'city' => 'Tokyo',
+                    'country_code' => 'JP',
+                    'budget' => 120000,
+                    'arrival_date' => '2026-07-01',
+                    'departure_date' => '2026-07-07',
+                ],
+                [
+                    'city' => 'Kyoto',
+                    'country_code' => 'JP',
+                    'budget' => 80000,
+                    'arrival_date' => '2026-07-07',
+                    'departure_date' => '2026-07-14',
+                ],
+            ],
+        ]);
+
+        $response->assertCreated();
+
+        $tripId = $response->json('data.id');
+
+        $this->assertDatabaseHas('destinations', [
+            'trip_id' => $tripId,
+            'city' => 'Tokyo',
+            'country_code' => 'JP',
+        ]);
+        $this->assertDatabaseHas('destinations', [
+            'trip_id' => $tripId,
+            'city' => 'Kyoto',
+            'country_code' => 'JP',
+        ]);
+
+        $this->assertDatabaseCount('destinations', 2);
+    }
+
+    #[Test]
+    public function it_rolls_back_the_trip_if_a_destination_is_invalid(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $this->postJson('/api/trips', [
+            'name' => 'Should not persist',
+            'start_date' => '2026-07-01',
+            'end_date' => '2026-07-14',
+            'status' => TripStatus::PLANNED->value,
+            'is_public' => true,
+            'destinations' => [
+                [
+                    'city' => 'Tokyo',
+                    'country_code' => 'JP',
+                    'budget' => 120000,
+                    'arrival_date' => '2026-07-01',
+                    'departure_date' => '2026-07-07',
+                ],
+                [
+                    'city' => '',
+                ],
+            ],
+        ])->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $this->assertDatabaseMissing('trips', ['name' => 'Should not persist']);
+        $this->assertDatabaseCount('destinations', 0);
+    }
+
+    #[Test]
+    public function it_validates_destination_fields(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $this->postJson('/api/trips', [
+            'name' => 'Japan 2026',
+            'start_date' => '2026-07-01',
+            'end_date' => '2026-07-14',
+            'status' => TripStatus::PLANNED->value,
+            'is_public' => true,
+            'destinations' => [
+                ['city' => ''],
+            ],
+        ])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertJsonValidationErrors([
+                'destinations.0.city',
+                'destinations.0.country_code',
+                'destinations.0.arrival_date',
+                'destinations.0.departure_date',
+            ]);
+    }
+
+    #[Test]
+    public function it_validates_required_trip_fields(): void
     {
         Sanctum::actingAs(User::factory()->create());
 
