@@ -27,7 +27,11 @@
         </button>
       </div>
     </div>
-
+    <TransportList
+      :destination-id="destination.id"
+      :transports="destination.transports"
+      :editable="editable"
+    />
     <TaskList
       :destination-id="destination.id"
       :tasks="destination.tasks"
@@ -43,6 +47,7 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import type { Destination } from '@/types/destinations';
 import TaskList from "@/components/TaskList.vue";
 import {getFlagClass} from "@/helpers.ts";
+import TransportList from "@/components/TransportList.vue";
 
 defineProps({
   destination: {

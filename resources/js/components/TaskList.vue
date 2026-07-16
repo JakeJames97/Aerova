@@ -1,34 +1,45 @@
 <template>
   <div class="task-section">
+    <div class="task-section__head">
+      <h4 class="task-section__title">
+        <RectangleStackIcon class="task-section__title-icon" />
+        Tasks
+      </h4>
+    </div>
+
     <ul v-if="tasks.length" class="task-list">
-      <li
-        v-for="task in tasks"
-        :key="task.id"
-        class="task"
-        :class="{ 'task--done': task.is_completed }"
-      >
-        <button
-          v-if="editable"
-          type="button"
-          class="task__toggle"
-          :aria-label="task.is_completed ? 'Mark incomplete' : 'Mark complete'"
-          @click="handleToggle(task)"
+      <ul v-if="tasks.length" class="task-list">
+        <li
+          v-for="task in tasks"
+          :key="task.id"
+          class="task"
+          :class="{ 'task--done': task.is_completed && editable }"
         >
-          <CheckIcon v-if="task.is_completed" class="task__icon" />
-          <CircleIcon v-else class="task__icon" />
-        </button>
-        <span class="task__title">{{ task.title }}</span>
-        <button
-          v-if="editable"
-          type="button"
-          class="icon-button icon-button--sm"
-          aria-label="Delete task"
-          @click="handleDelete(task)"
-        >
-          <TrashIcon class="icon-button__icon" />
-        </button>
-      </li>
+          <button
+            v-if="editable"
+            type="button"
+            class="task__toggle"
+            :aria-label="task.is_completed ? 'Mark incomplete' : 'Mark complete'"
+            @click="handleToggle(task)"
+          >
+            <CheckCircleIcon v-if="task.is_completed" class="task__icon" />
+            <CircleIcon v-else class="task__icon" />
+          </button>
+          <span class="task__title">{{ task.title }}</span>
+          <button
+            v-if="editable"
+            type="button"
+            class="icon-button icon-button--sm"
+            aria-label="Delete task"
+            @click="handleDelete(task)"
+          >
+            <TrashIcon class="icon-button__icon" />
+          </button>
+        </li>
+      </ul>
     </ul>
+
+    <p v-else-if="!editable" class="task-section__empty">No tasks yet.</p>
 
     <div v-if="editable">
       <form v-if="adding" class="task-add" @submit.prevent="handleAdd">
@@ -53,7 +64,7 @@ import { type PropType, nextTick, ref, useTemplateRef } from 'vue';
 import { useApiRequest } from '@/composables/useApiRequest';
 import * as tasksApi from '@/api/tasks';
 import BaseButton from '@/components/BaseButton.vue';
-import { CheckIcon, TrashIcon } from '@heroicons/vue/24/outline'
+import { RectangleStackIcon, CheckCircleIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import CircleIcon from '@/icons/circle.svg?component';
 import type { Task } from '@/types/tasks';
 import {useTripStore} from "@/stores/useTripStore.ts";

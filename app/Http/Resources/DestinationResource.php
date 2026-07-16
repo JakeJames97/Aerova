@@ -27,6 +27,7 @@ class DestinationResource extends JsonResource
             'arrival_date' => $this->resource->arrival_date?->toDateString(),
             'departure_date' => $this->resource->departure_date?->toDateString(),
             'tasks' => TaskResource::collection($this->whenLoaded('tasks')),
+            'transports' => TransportResource::collection($this->whenLoaded('transports')),
         ];
     }
 

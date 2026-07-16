@@ -37,7 +37,7 @@ class CloneController extends Controller
             $trip->user->notify(new TripCloned($trip, $user));
         }
 
-        $clone->load('destinations.tasks', 'destinations.country');
+        $clone->load(['destinations.country', 'destinations.tasks', 'destinations.transports']);
 
         return new TripResource($clone)
             ->response()

@@ -1,4 +1,5 @@
 import type {Task} from "@/types/tasks.ts";
+import type {Transport} from "@/types/transports.ts";
 
 export interface Destination {
   id: string;
@@ -10,6 +11,7 @@ export interface Destination {
   arrival_date: string | null;
   departure_date: string | null;
   tasks: Task[];
+  transports: Transport[];
 }
 
 export interface DestinationPayload {

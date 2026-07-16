@@ -9,6 +9,7 @@ require __DIR__ . '/trips.php';
 require __DIR__ . '/destinations.php';
 require __DIR__ . '/tasks.php';
 require __DIR__ . '/notifications.php';
+require __DIR__ . '/transports.php';
 
 Route::get('/countries', CountriesController::class);
 

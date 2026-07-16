@@ -5,6 +5,7 @@ namespace Tests\Unit\Services;
 use App\Enums\TripStatus;
 use App\Models\Destination;
 use App\Models\Task;
+use App\Models\Transport;
 use App\Models\Trip;
 use App\Models\User;
 use App\Services\TripService;
@@ -34,11 +35,12 @@ class TripServiceTest extends TestCase
         ]);
         $destinations = Destination::factory()->count(3)->for($original)->create();
         Task::factory()->count(2)->for($destinations->first())->create();
+        Transport::factory()->count(2)->for($destinations->first())->create();
 
         $cloner = User::factory()->create();
 
         $clone = $this->service->clone($original, $cloner);
-        $clone->load('destinations.tasks');
+        $clone->load('destinations.tasks', 'destinations.transports');
 
         $this->assertSame($cloner->id, $clone->user_id);
         $this->assertNotSame($original->id, $clone->id);
@@ -47,6 +49,7 @@ class TripServiceTest extends TestCase
         $this->assertSame('Japan 2026 (copy)', $clone->name);
         $this->assertCount(3, $clone->destinations);
         $this->assertCount(2, $clone->destinations->first()->tasks);
+        $this->assertCount(2, $clone->destinations->first()->transports);
         $this->assertSame(
             $original->destinations->first()->budget,
             $clone->destinations->first()->budget,
@@ -62,12 +65,14 @@ class TripServiceTest extends TestCase
         Task::factory()->for($destination)->create([
             'title' => str_repeat('a', 700000000),
         ]);
+        Transport::factory()->count(2)->for($destination)->create();
 
         $user = User::factory()->create();
 
         $tripsBefore = Trip::count();
         $destinationsBefore = Destination::count();
         $tasksBefore = Task::count();
+        $transportBefore = Transport::count();
 
         Task::creating(function () {
             throw new RuntimeException('Simulated task failure');
@@ -81,5 +86,6 @@ class TripServiceTest extends TestCase
         $this->assertSame($tripsBefore, Trip::count());
         $this->assertSame($destinationsBefore, Destination::count());
         $this->assertSame($tasksBefore, Task::count());
+        $this->assertSame($transportBefore, Transport::count());
     }
 }

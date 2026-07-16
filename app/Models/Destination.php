@@ -56,6 +56,14 @@ class Destination extends Model
         return $this->belongsTo(Country::class, 'country_code', 'code');
     }
 
+    /**
+     * @return HasMany<Transport, $this>
+     */
+    public function transports(): HasMany
+    {
+        return $this->hasMany(Transport::class)->orderBy('departure_at');
+    }
+
     protected function budget(): Attribute
     {
         return Attribute::make(

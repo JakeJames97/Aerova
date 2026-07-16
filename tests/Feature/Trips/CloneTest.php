@@ -3,6 +3,8 @@
 namespace Tests\Feature\Trips;
 
 use App\Models\Destination;
+use App\Models\Task;
+use App\Models\Transport;
 use App\Models\Trip;
 use App\Models\User;
 use App\Notifications\TripCloned;
@@ -30,7 +32,9 @@ class CloneTest extends TestCase
     {
         $owner = User::factory()->create();
         $trip = Trip::factory()->for($owner)->create(['is_public' => true, 'name' => 'Japan 2026']);
-        Destination::factory()->count(2)->for($trip)->create();
+        $destinations = Destination::factory()->count(2)->for($trip)->create();
+        Task::factory()->count(2)->for($destinations->first())->create();
+        Transport::factory()->count(2)->for($destinations->first())->create();
 
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -39,7 +43,9 @@ class CloneTest extends TestCase
             ->assertCreated()
             ->assertJsonPath('data.name', 'Japan 2026 (copy)')
             ->assertJsonPath('data.is_owner', true)
-            ->assertJsonCount(2, 'data.destinations');
+            ->assertJsonCount(2, 'data.destinations')
+            ->assertJsonCount(2, 'data.destinations.0.transports')
+            ->assertJsonCount(2, 'data.destinations.0.tasks');
 
         $this->assertDatabaseHas('trips', [
             'name' => 'Japan 2026 (copy)',

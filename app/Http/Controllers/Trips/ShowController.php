@@ -15,6 +15,7 @@ class ShowController extends Controller
             'destinations',
             'destinations.country',
             'destinations.tasks',
+            'destinations.transports',
         ])->loadCount('likes');
 
         return new TripResource($trip);

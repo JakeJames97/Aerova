@@ -15,7 +15,7 @@ class TripService
      */
     public function clone(Trip $trip, User $user): Trip
     {
-        $trip->load('destinations.tasks');
+        $trip->load(['destinations.tasks', 'destinations.transports']);
 
         return DB::transaction(static function () use ($trip, $user) {
             $newTrip = $user->trips()->create([
@@ -35,6 +35,21 @@ class TripService
                     'arrival_date' => $destination->arrival_date,
                     'departure_date' => $destination->departure_date,
                 ]);
+
+                foreach ($destination->transports as $transport) {
+                    $newDestination->transports()->create([
+                        'from' => $transport->from,
+                        'to' => $transport->to,
+                        'type' => $transport->type,
+                        'identifier' => $transport->identifier,
+                        'price' => $transport->price,
+                        'airline' => $transport->airline,
+                        'arrival_at' => $transport->arrival_at,
+                        'departure_at' => $transport->departure_at,
+                        'from_iata' => $transport->from_iata,
+                        'to_iata' => $transport->to_iata,
+                    ]);
+                }
 
                 foreach ($destination->tasks as $task) {
                     $newDestination->tasks()->create([
