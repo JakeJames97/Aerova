@@ -37,6 +37,9 @@
             </div>
           </div>
           <p class="trip-detail__dates">{{ formatDateRange(trip.start_date, trip.end_date) }}</p>
+          <p v-if="trip.budget_formatted" class="trip-detail__budget">
+            Budget: {{ trip.budget_formatted }}
+          </p>
         </div>
       </header>
 

@@ -20,7 +20,7 @@ class TransportResource extends JsonResource
             'arrival_at' => $this->resource->arrival_at->format('Y-m-d H:i:s'),
             'price' => $this->resource->price,
             'price_formatted' => $this->resource->price !== null
-                ? Money::GBP($this->resource->price)->format()
+                ? Money::GBP((int) round($this->resource->price) * 100)->format()
                 : null,
             'airline' => $this->resource->airline,
             'from_iata' => $this->resource->from_iata,

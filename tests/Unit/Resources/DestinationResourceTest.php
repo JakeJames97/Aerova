@@ -19,6 +19,10 @@ class DestinationResourceTest extends TestCase
 
     public function test_it_returns_the_expected_shape(): void
     {
+        $this->mock(CurrencyService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('convert')->andReturn(85400);
+        });
+
         $destination = $this->makeDestination([
             'city' => 'Rome',
             'country_code' => 'IT',

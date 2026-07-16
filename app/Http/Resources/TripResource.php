@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Akaunting\Money\Money;
+use App\Models\Destination;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -34,7 +35,9 @@ class TripResource extends JsonResource
 
     private function budgetData(Trip $trip): array
     {
-        $total = $trip->destinations->sum(fn ($destination) => $destination->budget);
+        $total = $trip->destinations->sum(
+            fn (Destination $destination) => $destination->budget + $destination->transports->sum('price'),
+        );
 
         return [
             'budget' => $total,

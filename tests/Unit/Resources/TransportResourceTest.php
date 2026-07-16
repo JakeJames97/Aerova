@@ -27,7 +27,7 @@ class TransportResourceTest extends TestCase
                 'identifier' => 'BA1234',
                 'departure_at' => '2026-08-03 09:15:00',
                 'arrival_at' => '2026-08-03 10:45:00',
-                'price' => 32000,
+                'price' => 320,
                 'airline' => 'British Airways',
                 'from_iata' => 'EDI',
                 'to_iata' => 'LHR',
@@ -40,7 +40,7 @@ class TransportResourceTest extends TestCase
         $this->assertSame('Edinburgh Airport', $array['from']);
         $this->assertSame('London Heathrow', $array['to']);
         $this->assertSame('BA1234', $array['identifier']);
-        $this->assertSame(32000, $array['price']);
+        $this->assertSame(320, $array['price']);
         $this->assertSame('£320.00', $array['price_formatted']);
         $this->assertSame('British Airways', $array['airline']);
         $this->assertSame('EDI', $array['from_iata']);

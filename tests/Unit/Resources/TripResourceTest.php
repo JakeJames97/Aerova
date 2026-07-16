@@ -5,6 +5,7 @@ namespace Tests\Unit\Resources;
 use App\Enums\TripStatus;
 use App\Http\Resources\TripResource;
 use App\Models\Destination;
+use App\Models\Transport;
 use App\Models\Trip;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,7 +39,7 @@ class TripResourceTest extends TestCase
     {
         $trip = Trip::factory()->for(User::factory())->create();
         Destination::factory()->count(2)->for($trip)->create();
-        $trip->load('destinations');
+        $trip->load('destinations.transports');
 
         $array = new TripResource($trip)->toArray(Request::create('/'));
 
@@ -116,21 +117,22 @@ class TripResourceTest extends TestCase
         $trip = Trip::factory()->for(User::factory())->create();
         Destination::factory()->for($trip)->create(['budget' => 2000]);
         Destination::factory()->for($trip)->create(['budget' => 3500]);
-        Destination::factory()->for($trip)->create(['budget' => 1000]);
-        $trip->load('destinations');
+        $destination = Destination::factory()->for($trip)->create(['budget' => 1000]);
+        Transport::factory()->for($destination)->create(['price' => 1000]);
+        $trip->load('destinations.transports');
 
         $array = new TripResource($trip)->toArray(Request::create('/'));
 
         $array = $array[0]->data;
 
-        $this->assertSame(6500, $array['budget']);
-        $this->assertSame('£6,500.00', $array['budget_formatted']);
+        $this->assertSame(7500, $array['budget']);
+        $this->assertSame('£7,500.00', $array['budget_formatted']);
     }
 
     public function test_it_returns_zero_budget_when_no_destinations(): void
     {
         $trip = Trip::factory()->for(User::factory())->create();
-        $trip->load('destinations');
+        $trip->load('destinations.transports');
 
         $array = new TripResource($trip)->toArray(Request::create('/'));
 

@@ -8,10 +8,12 @@ use App\Models\Transport;
 use App\Models\Trip;
 use App\Models\User;
 use App\Notifications\TripCloned;
+use App\Services\CurrencyService;
 use App\Services\TripService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Sanctum\Sanctum;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 use Tests\TestCase;
@@ -30,6 +32,10 @@ class CloneTest extends TestCase
     #[Test]
     public function it_clones_a_public_trip(): void
     {
+        $this->mock(CurrencyService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('convert')->andReturn(85400);
+        });
+
         $owner = User::factory()->create();
         $trip = Trip::factory()->for($owner)->create(['is_public' => true, 'name' => 'Japan 2026']);
         $destinations = Destination::factory()->count(2)->for($trip)->create();

@@ -40,7 +40,7 @@ class CreateController extends Controller
             throw new TripException('Unexpected error when creating trip', previous: $throwable);
         }
 
-        $trip->load('destinations.country');
+        $trip->load(['destinations.country', 'destinations.transports']);
 
         return new TripResource($trip)
             ->response()

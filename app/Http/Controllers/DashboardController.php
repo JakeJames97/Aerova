@@ -32,7 +32,7 @@ class DashboardController
         $nextTrip = $user->trips()
             ->where('start_date', '>=', now())
             ->orderBy('start_date')
-            ->with(['destinations.country'])
+            ->with(['destinations.country', 'destinations.transports'])
             ->first();
 
         return response()->json([

@@ -40,13 +40,13 @@ class CreateTransportTest extends TestCase
             'identifier' => 'BA1234',
             'departure_at' => '2026-08-03 09:15:00',
             'arrival_at' => '2026-08-03 10:45:00',
-            'price' => 32000,
+            'price' => 320,
             'airline' => 'British Airways',
             'from_iata' => 'EDI',
             'to_iata' => 'LHR',
         ])
             ->assertCreated()
-            ->assertJsonPath('data.price', 32000)
+            ->assertJsonPath('data.price', 320)
             ->assertJsonPath('data.price_formatted', '£320.00')
             ->assertJsonPath('data.identifier', 'BA1234')
             ->assertJsonPath('data.from_iata', 'EDI')

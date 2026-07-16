@@ -4,7 +4,7 @@
       <div class="destination__head-left">
         <div class="destination__title">
           <h3 class="destination__name">
-            <span :class="getFlagClass(destination.country_code)" />
+            <span :class="getFlagClass(destination.country_code)"/>
             {{ destination.city }}
           </h3>
           <span v-if="destination.budget_formatted" class="destination__budget">
@@ -20,10 +20,10 @@
       </div>
       <div v-if="editable" class="destination__actions">
         <button type="button" class="icon-button" aria-label="Edit destination" @click="emit('edit', destination)">
-          <PencilSquareIcon class="icon-button__icon" />
+          <PencilSquareIcon class="icon-button__icon"/>
         </button>
         <button type="button" class="icon-button" aria-label="Delete destination" @click="emit('delete', destination)">
-          <TrashIcon class="icon-button__icon" />
+          <TrashIcon class="icon-button__icon"/>
         </button>
       </div>
     </div>
@@ -41,15 +41,15 @@
 </template>
 
 <script setup lang="ts">
-import { type PropType } from 'vue';
-import { formatDateRange } from '@/lib/date';
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
-import type { Destination } from '@/types/destinations';
+import {computed, type PropType} from 'vue';
+import {formatDateRange} from '@/lib/date';
+import {PencilSquareIcon, TrashIcon} from '@heroicons/vue/24/outline'
+import type {Destination} from '@/types/destinations';
 import TaskList from "@/components/TaskList.vue";
 import {getFlagClass} from "@/helpers.ts";
 import TransportList from "@/components/TransportList.vue";
 
-defineProps({
+const props = defineProps({
   destination: {
     type: Object as PropType<Destination>,
     required: true
