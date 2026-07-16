@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Tasks;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Data\Tasks\CreateTaskData;
+use App\Http\Requests\BaseFormRequest;
 
-class CreateTaskRequest extends FormRequest
+class CreateTaskRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -16,5 +17,10 @@ class CreateTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
         ];
+    }
+
+    public function toDto(): CreateTaskData
+    {
+        return CreateTaskData::fromRequest($this);
     }
 }

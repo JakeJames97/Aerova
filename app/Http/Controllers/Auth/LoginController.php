@@ -14,16 +14,16 @@ class LoginController extends Controller
 {
     public function __invoke(LoginRequest $request): JsonResponse
     {
-        $data = $request->validated();
+        $data = $request->toDto();
 
-        $isEmail = filter_var($data['login'], FILTER_VALIDATE_EMAIL);
+        $isEmail = filter_var($data->login, FILTER_VALIDATE_EMAIL);
 
         $user = User::query()
-            ->when($isEmail, fn ($query) => $query->whereEmail($data['login']))
-            ->when(!$isEmail, fn ($query) => $query->where('username', $data['login']))
+            ->when($isEmail, fn ($query) => $query->whereEmail($data->login))
+            ->when(!$isEmail, fn ($query) => $query->where('username', $data->login))
             ->first();
 
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (!$user || !Hash::check($data->password, $user->password)) {
             return response()->json([
                 'message' => 'These credentials do not match our records.',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);

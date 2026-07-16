@@ -13,12 +13,12 @@ class RegisterController extends Controller
 {
     public function __invoke(RegisterRequest $request): JsonResponse
     {
-        $data = $request->validated();
+        $data = $request->toDto();
 
         $user = User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => $data['password'],
+            'username' => $data->username,
+            'email' => $data->email,
+            'password' => $data->password,
         ]);
 
         $token = $user->createToken('spa')->plainTextToken;

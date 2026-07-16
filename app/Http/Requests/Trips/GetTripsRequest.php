@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Trips;
 
+use App\Data\Trips\GetTripsData;
 use App\Enums\TripStatus;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class GetTripsRequest extends FormRequest
+class GetTripsRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -21,5 +22,10 @@ class GetTripsRequest extends FormRequest
             'search' => ['sometimes', 'string'],
             'status' => ['sometimes', new Enum(TripStatus::class)],
         ];
+    }
+
+    public function toDto(): GetTripsData
+    {
+        return GetTripsData::fromRequest($this);
     }
 }

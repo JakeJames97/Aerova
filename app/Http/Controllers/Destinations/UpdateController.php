@@ -11,7 +11,7 @@ class UpdateController extends Controller
 {
     public function __invoke(UpdateDestinationRequest $request, Destination $destination): DestinationResource
     {
-        $destination->update($request->validated());
+        $destination->update($request->toDto()->toArray());
 
         return new DestinationResource($destination);
     }

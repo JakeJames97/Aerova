@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Trips;
 
+use App\Data\Destinations\CreateDestinationData;
 use App\Exceptions\TripException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Trips\CreateTripRequest;
@@ -16,16 +17,18 @@ class CreateController extends Controller
 {
     public function __invoke(CreateTripRequest $request): JsonResponse
     {
-        $data = collect($request->validated());
+        $data = $request->toDto();
 
         try {
             $trip = DB::transaction(static function () use ($request, $data) {
-                $trip = $request->user()->trips()->create($data->except('destinations')->toArray());
-                $destinations = $data->get('destinations') ?? [];
+                $trip = $request->user()->trips()->create($data->toArray());
 
-                foreach ($destinations as $destination) {
-                    $trip->destinations()->create($destination);
-                }
+                $trip->destinations()->createMany(
+                    array_map(
+                        static fn (CreateDestinationData $destination) => $destination->toArray(),
+                        $data->destinations,
+                    ),
+                );
 
                 return $trip;
             });
@@ -34,7 +37,7 @@ class CreateController extends Controller
                 'exception' => $throwable,
             ]);
 
-            throw new TripException('Unexpected error when creating trip');
+            throw new TripException('Unexpected error when creating trip', previous: $throwable);
         }
 
         $trip->load('destinations.country');

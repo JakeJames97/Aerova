@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Trips;
 
+use App\Data\Trips\UpdateTripData;
 use App\Enums\TripStatus;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class UpdateTripRequest extends FormRequest
+class UpdateTripRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -23,5 +24,10 @@ class UpdateTripRequest extends FormRequest
             'status' => ['sometimes', new Enum(TripStatus::class)],
             'is_public' => ['sometimes', 'boolean'],
         ];
+    }
+
+    public function toDto(): UpdateTripData
+    {
+        return UpdateTripData::fromRequest($this);
     }
 }

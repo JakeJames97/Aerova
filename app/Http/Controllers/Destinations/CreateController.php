@@ -17,7 +17,7 @@ class CreateController extends Controller
     {
         Gate::authorize('create', [Destination::class, $trip]);
 
-        $destination = $trip->destinations()->create($request->validated());
+        $destination = $trip->destinations()->create($request->toDto()->toArray());
 
         return new DestinationResource($destination)
             ->response()

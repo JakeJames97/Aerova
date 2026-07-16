@@ -11,7 +11,8 @@ class UpdateController extends Controller
 {
     public function __invoke(UpdateTripRequest $request, Trip $trip): TripResource
     {
-        $trip->update($request->validated());
+        $data = $request->toDto();
+        $trip->update($data->toArray());
 
         $trip->load([
             'destinations',

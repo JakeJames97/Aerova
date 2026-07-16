@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Trips;
 
+use App\Data\Trips\CreateTripData;
 use App\Enums\TripStatus;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class CreateTripRequest extends FormRequest
+class CreateTripRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -29,5 +30,10 @@ class CreateTripRequest extends FormRequest
             'destinations.*.arrival_date' => ['required', 'date'],
             'destinations.*.departure_date' => ['required', 'date', 'after_or_equal:arrival_date'],
         ];
+    }
+
+    public function toDto(): CreateTripData
+    {
+        return CreateTripData::fromRequest($this);
     }
 }

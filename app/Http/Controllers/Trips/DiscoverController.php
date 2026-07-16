@@ -12,18 +12,18 @@ class DiscoverController extends Controller
 {
     public function __invoke(GetTripsRequest $request): AnonymousResourceCollection
     {
-        $params = $request->validated();
-        $page = array_key_exists('page', $params) ? $params['page'] : 1;
+        $filters = $request->toDto();
 
         $trips = Trip::query()
             ->public()
             ->with(['user', 'likes'])
             ->withCount(['destinations', 'likes'])
-            ->when($params['status'] ?? null, fn ($q, $status) => $q->where('status', $status))
+            ->when($filters->status, fn ($q, $status) => $q->where('status', $status))
             ->when(
-                $params['country'] ?? null, fn ($q, $country) => $q->whereHas('destinations', fn ($q) => $q->where('country_code', $country))
+                $filters->country,
+                fn ($q, $country) => $q->whereHas('destinations', fn ($q) => $q->where('country_code', $country)),
             )
-            ->when($params['search'] ?? null, function ($query, $search) {
+            ->when($filters->search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%")
                         ->orWhereHas('destinations', fn ($query) => $query->where('city', 'like', "%{$search}%")
@@ -31,7 +31,7 @@ class DiscoverController extends Controller
                 });
             })
             ->latest()
-            ->paginate(page: $page);
+            ->paginate(12);
 
         return TripResource::collection($trips);
     }

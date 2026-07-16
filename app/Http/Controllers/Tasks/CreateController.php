@@ -17,8 +17,10 @@ class CreateController extends Controller
     {
         Gate::authorize('create', [Task::class, $destination]);
 
+        $data = $request->toDto();
+
         $task = $destination->tasks()->create([
-            ...$request->validated(),
+            'title' => $data->title,
             'is_completed' => false,
         ]);
 

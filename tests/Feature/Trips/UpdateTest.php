@@ -58,6 +58,29 @@ class UpdateTest extends TestCase
     }
 
     #[Test]
+    public function it_does_not_change_fields_that_were_not_sent(): void
+    {
+        $user = User::factory()->create();
+        $trip = Trip::factory()->for($user)->create([
+            'name' => 'Original',
+            'description' => 'Original description',
+            'is_public' => true,
+        ]);
+
+        Sanctum::actingAs($user);
+
+        $this->putJson("/api/trips/{$trip->id}", ['name' => 'Updated'])
+            ->assertOk();
+
+        $this->assertDatabaseHas('trips', [
+            'id' => $trip->id,
+            'name' => 'Updated',
+            'description' => 'Original description',
+            'is_public' => true,
+        ]);
+    }
+
+    #[Test]
     public function it_requires_authentication(): void
     {
         $trip = Trip::factory()->create();

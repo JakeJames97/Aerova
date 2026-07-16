@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Destinations;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Data\Destinations\UpdateDestinationData;
+use App\Http\Requests\BaseFormRequest;
 
-class UpdateDestinationRequest extends FormRequest
+class UpdateDestinationRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -20,5 +21,10 @@ class UpdateDestinationRequest extends FormRequest
             'arrival_date' => ['sometimes', 'date'],
             'departure_date' => ['sometimes', 'date', 'after_or_equal:arrival_date'],
         ];
+    }
+
+    public function toDto(): UpdateDestinationData
+    {
+        return UpdateDestinationData::fromRequest($this);
     }
 }

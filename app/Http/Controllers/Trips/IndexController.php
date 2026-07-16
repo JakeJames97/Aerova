@@ -11,18 +11,16 @@ class IndexController extends Controller
 {
     public function __invoke(GetTripsRequest $request): AnonymousResourceCollection
     {
-        $params = $request->validated();
-
-        $page = array_key_exists('page', $params) ? $params['page'] : 1;
+        $params = $request->toDto();
 
         $trips = $request->user()
             ->trips()
             ->withCount('destinations')
             ->withCount('likes')
             ->with('likes')
-            ->when($params['status'] ?? null, fn ($q, $status) => $q->where('status', $status))
+            ->when($params->status, fn ($q, $status) => $q->where('status', $status))
             ->latest('start_date')
-            ->paginate(page: $page);
+            ->paginate();
 
         return TripResource::collection($trips);
     }
