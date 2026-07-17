@@ -12,6 +12,9 @@ require __DIR__ . '/tasks.php';
 require __DIR__ . '/notifications.php';
 require __DIR__ . '/transports.php';
 
+Route::get('/ping', function () {
+    return response()->json(['message' => 'pong']);
+});
 Route::get('/countries', CountriesController::class);
 Route::get('/airports', SearchAirportsController::class);
 
