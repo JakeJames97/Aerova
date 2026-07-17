@@ -123,6 +123,10 @@ watch(
 
   &__control {
     position: relative;
+
+    input {
+      width: 100%;
+    }
   }
 
   &__results {
