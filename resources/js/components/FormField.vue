@@ -3,7 +3,7 @@
     <label class="form-field__label">
       <span>{{ label }}</span>
     </label>
-    <input v-model="value" :type="type ?? 'text'" @blur="handleBlur" />
+    <input v-model="value" :type="type ?? 'text'" @blur="handleBlur" :maxlength="maxLength" :placeholder="placeholder" />
     <span v-if="errorMessage" class="form-field__error">{{ errorMessage }}</span>
   </div>
 </template>
@@ -27,6 +27,12 @@ const props = defineProps({
   modelValue: {
     type: [String, null] as PropType<string | null>,
     default: null,
+  },
+  maxLength: {
+    type: Number,
+  },
+  placeholder: {
+    type: String,
   },
 });
 

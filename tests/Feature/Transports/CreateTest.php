@@ -12,7 +12,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class CreateTransportTest extends TestCase
+class CreateTest extends TestCase
 {
     use RefreshDatabase;
 
