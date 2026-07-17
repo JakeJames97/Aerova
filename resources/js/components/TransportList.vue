@@ -31,6 +31,7 @@
       v-model:open="formOpen"
       :destination-id="destinationId"
       :transport="editing"
+      :key="editing?.id"
     />
     <ConfirmDialog
       v-if="editable"
@@ -45,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import {type PropType, ref} from 'vue';
+import {nextTick, type PropType, ref} from 'vue';
 import MapPinIcon from '@/icons/map-pin.svg?component';
 import type {Transport} from '@/types/transports';
 import TransportItem from '@/components/TransportItem.vue';
@@ -82,12 +83,15 @@ const editing = ref<Transport | null>(null);
 const deleteOpen = ref(false);
 const transportToDelete = ref<Transport | null>(null);
 
-function openEdit(transport: Transport) {
-  editing.value = transport;
+async function openCreate() {
+  editing.value = null;
+  await nextTick();
   formOpen.value = true;
 }
-function openCreate() {
-  editing.value = null;
+
+async function openEdit(transport: Transport) {
+  editing.value = transport;
+  await nextTick();
   formOpen.value = true;
 }
 
