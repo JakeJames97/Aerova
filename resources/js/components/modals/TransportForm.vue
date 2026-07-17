@@ -10,7 +10,7 @@
       <div class="form__row">
         <AirportAutocomplete
           name="from_iata"
-          label="From (airport)"
+          label="From"
           placeholder="Edinburgh"
           :model-value="transport?.from as string"
           :model-label="transport ? `${transport.from_iata} — ${transport.from}` : ''"
@@ -19,7 +19,7 @@
         />
         <AirportAutocomplete
           name="to_iata"
-          label="To (airport)"
+          label="To"
           placeholder="Heathrow"
           :model-value="transport?.to as string"
           :model-label="transport ? `${transport.to_iata} — ${transport.to}` : ''"
@@ -130,6 +130,7 @@ const onSubmit = handleSubmit(async (formValues) => {
   );
 
   if (!result) {
+    notify.error('An error occurred when trying to add your transport, please try again later')
     return;
   }
 
